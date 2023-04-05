@@ -12,7 +12,14 @@
         android:theme="@style/Theme.MedEase"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".HomepageActivity"
+=======
+            android:name=".userregisteractivity"
+            android:exported="false" />
+        <activity
+            android:name=".loginpage"
+>>>>>>> 3f67cc90560466d8c9cc8059163a93e7d187d7d7
             android:exported="false" />
         <activity
             android:name=".MainActivity"
