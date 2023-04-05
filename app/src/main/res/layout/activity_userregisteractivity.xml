@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="User Profile"
-        android:id="@+id/textview_loginText"
         android:textSize="30sp"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -20,9 +19,9 @@
 
 
     <EditText
+        android:id="@+id/editText_register_username"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:id="@+id/editText_register_username"
         android:hint=" Username"
         android:inputType="textPersonName"
         android:drawableLeft="@drawable/ic_baseline_person_24"
@@ -38,9 +37,9 @@
 
 
     <EditText
+        android:id="@+id/editText_password"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:id="@+id/editText_password"
         android:hint=" Password"
         android:inputType="textPassword"
         android:drawableLeft="@drawable/ic_baseline_lock_24"
@@ -57,9 +56,9 @@
 
 
     <EditText
+        android:id="@+id/editText_age"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:id="@+id/editText_age"
         android:hint=" Age"
         android:inputType="number"
         android:textSize="16sp"
@@ -75,9 +74,9 @@
 
 
     <TextView
+        android:id="@+id/textView_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView_gender"
         android:text="Gender"
         android:textColor="#171616"
         android:layout_marginLeft="5dp"
@@ -94,18 +93,18 @@
         android:id="@+id/radio_group_gender">
 
         <RadioButton
+            android:id="@+id/radio_female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_female"
             android:layout_marginLeft="5dp"
             android:text="Female"
             android:textSize="16sp"
             android:textColor="#555555"/>
 
         <RadioButton
+            android:id="@+id/radio_male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_male"
             android:text="Male"
             android:layout_marginLeft="20dp"
             android:textSize="16sp"
@@ -114,9 +113,9 @@
 
 
     <EditText
+        android:id="@+id/editText_email"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:id="@+id/editText_email"
         android:hint=" E-mail"
         android:inputType="textEmailAddress"
         android:drawableLeft="@drawable/baseline_email_24"
@@ -132,9 +131,9 @@
 
 
     <EditText
+        android:id="@+id/editText_mobile"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:id="@+id/editText_mobile"
         android:hint=" Mobile Number"
         android:inputType="phone"
         android:drawableLeft="@drawable/baseline_dialpad_24"
@@ -147,9 +146,9 @@
         android:layout_marginTop="13dp"/>
 
     <Button
+        android:id="@+id/registeruserbutton"
         android:layout_width="wrap_content"
         android:layout_height="48sp"
-        android:id="@+id/userbutton"
         android:text="Register"
         android:textSize="16sp"
         android:backgroundTint="#E91E63"

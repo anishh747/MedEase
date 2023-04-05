@@ -12,14 +12,10 @@
         android:theme="@style/Theme.MedEase"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
-            android:name=".HomepageActivity"
-=======
-            android:name=".userregisteractivity"
+            android:name=".loginpage"
             android:exported="false" />
         <activity
-            android:name=".loginpage"
->>>>>>> 3f67cc90560466d8c9cc8059163a93e7d187d7d7
+            android:name=".HomepageActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -28,7 +24,7 @@
             android:name=".ChatsUserSectionActivity"
             android:exported="false" />
         <activity
-            android:name=".loginpage"
+            android:name=".userregisteractivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
