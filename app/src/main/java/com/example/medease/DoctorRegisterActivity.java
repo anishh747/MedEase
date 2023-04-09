@@ -3,10 +3,13 @@ package com.example.medease;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -26,6 +29,8 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private ActivityDoctorRegisterBinding doctorRegisterBinding;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    String speciality;
+    String radiobuttontext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,36 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.DoctorSpeciality, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        doctorRegisterBinding.SpinnerDoctorSpeciality.setAdapter(adapter);
+
+        doctorRegisterBinding.SpinnerDoctorSpeciality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                if(position > 0){
+                    speciality = parent.getItemAtPosition(position).toString();
+                }
+                else{
+                    Toast.makeText(DoctorRegisterActivity.this, "INVALID SECTION", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         doctorRegisterBinding.registeruserbutton.setOnClickListener(view1 -> {
 
@@ -55,8 +90,11 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
 
             RadioButton radioButton = findViewById(radioid);
-            String radiobuttontext = radioButton.getText().toString();
-            if(TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(age) ||TextUtils.isEmpty(mobileno) || TextUtils.isEmpty(experience) || TextUtils.isEmpty(qualification) || TextUtils.isEmpty(currentpractisesitelocation) || TextUtils.isEmpty(currentpractisesite)){
+            if(radioButton != null){
+                radiobuttontext = radioButton.getText().toString();
+
+            }
+            if(TextUtils.isEmpty(speciality) || TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(age) ||TextUtils.isEmpty(mobileno) || TextUtils.isEmpty(experience) || TextUtils.isEmpty(qualification) || TextUtils.isEmpty(currentpractisesitelocation) || TextUtils.isEmpty(currentpractisesite)){
                 Toast.makeText(DoctorRegisterActivity.this, "Empty Fields", Toast.LENGTH_LONG).show();
 
             }
@@ -89,6 +127,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                             map.put("Qualification", qualification);
                             map.put("CurrentPractiseSite",currentpractisesite);
                             map.put("CurrentPractiseSiteLocation",currentpractisesitelocation);
+                            map.put("Speciality",speciality);
                             databaseReference.child("Users").child("Doctor").child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(task1 -> {
                                 if(task1.isSuccessful()){
                                     Toast.makeText(DoctorRegisterActivity.this, "Added to database ", Toast.LENGTH_SHORT).show();
@@ -96,7 +135,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                             });
                             Toast.makeText(DoctorRegisterActivity.this, "Registration Sucessful", Toast.LENGTH_LONG).show();
 
-                            //startActivity(new Intent(userregisteractivity.this,ImageSetupActivity.class));
+                            startActivity(new Intent(DoctorRegisterActivity.this,ImageSetupActivity.class));
 
                         }else{
                             Toast.makeText(DoctorRegisterActivity.this, "Unsucessful Registration", Toast.LENGTH_LONG).show();

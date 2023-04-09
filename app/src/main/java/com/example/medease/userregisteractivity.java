@@ -90,7 +90,7 @@ public class userregisteractivity extends AppCompatActivity {
                             });
                             Toast.makeText(userregisteractivity.this, "Registration Sucessful", Toast.LENGTH_LONG).show();
 
-                            //startActivity(new Intent(userregisteractivity.this,ImageSetupActivity.class));
+                            startActivity(new Intent(userregisteractivity.this,ImageSetupActivity.class));
 
                         }else{
                             Toast.makeText(userregisteractivity.this, "Unsucessful Registration", Toast.LENGTH_LONG).show();

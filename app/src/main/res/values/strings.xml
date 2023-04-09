@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MedEase</string>
+    <string-array name="DoctorSpeciality">
+        <item>Enter your Speciality</item>
+        <item>Dentist</item>
+        <item>Cardiologist</item>
+        <item>Pulmonologist</item>
+        <item>Opthalmologist</item>
+        <item>Gynecologist</item>
+    </string-array>
 </resources>

@@ -153,6 +153,12 @@
                 android:background="@drawable/custom_edittext"
                 android:layout_marginTop="13dp"/>
 
+            <Spinner
+                android:id="@+id/SpinnerDoctorSpeciality"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
             <EditText
                 android:id="@+id/editText_experience"
                 android:layout_width="match_parent"
