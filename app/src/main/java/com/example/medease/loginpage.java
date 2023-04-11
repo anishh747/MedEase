@@ -65,7 +65,7 @@ public class loginpage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(loginpage.this, "Login Sucessful", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(loginpage.this, MainActivity.class));
+                            startActivity(new Intent(loginpage.this, Drawer.class));
                         }else{
                             Toast.makeText(loginpage.this, "Login Unsucessful", Toast.LENGTH_LONG).show();
                         }
@@ -74,5 +74,13 @@ public class loginpage extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            startActivity(new Intent(loginpage.this,Drawer.class));
+            finish();
+        }
     }
 }

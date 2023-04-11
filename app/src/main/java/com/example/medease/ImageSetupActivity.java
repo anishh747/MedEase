@@ -41,7 +41,7 @@ public class ImageSetupActivity extends AppCompatActivity {
 //                    Uri imageUri = result.getData().getData();
 //                    setupimage.setImageURI(imageUri);
 //
-//                    //In this case, the Intent that is returned by the gallery app contains the URI of the selected image
+//                    //In this case, the Intent that is returned by the shop app contains the URI of the selected image
 //                    // in its data field. So when we call result.getData(), we get an Intent object that contains the image URI as its data field.
 //                    //
 //                    //To extract the actual URI of the selected image, we need to call getData() again on the Intent object.

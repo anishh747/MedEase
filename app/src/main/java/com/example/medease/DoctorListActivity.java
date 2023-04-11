@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.example.medease.Adapter.DoctorListAdapter;
 import com.example.medease.Model.Doctors;
 import com.example.medease.databinding.ActivityDoctorListBinding;
-import com.example.medease.databinding.ActivityHomepageActivityBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;

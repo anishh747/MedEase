@@ -1,6 +1,8 @@
 package com.example.medease.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medease.ChatActivity;
+import com.example.medease.DoctorRegisterActivity;
 import com.example.medease.Model.Doctors;
 import com.example.medease.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -20,6 +30,7 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
 
     List<Doctors> chatUserList;
     Context context;
+    String userType;
 
     public ChatUserAdapter(Context context, List<Doctors> chatUserList) {
         this.context = context;
@@ -63,6 +74,67 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
         holder.usernametextview.setText(doctors.getUsername());
         holder.chatuserfield.setText(doctors.getSpeciality());
         holder.chatuserexperience.setText(doctors.getExperience());
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.i("My uid",uid);
+
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+
+// Check if the current user is a doctor
+        usersRef.child("Doctor").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context, ChatActivity.class);
+                            intent.putExtra("userid",doctors.getId());
+                            intent.putExtra("usertype","Doctor");
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        }
+                    });
+                } else {
+                    // The current user is not a doctor, so check if they are a normal user
+                    usersRef.child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(context, ChatActivity.class);
+                                        intent.putExtra("userid",doctors.getId());
+                                        intent.putExtra("usertype","NormalUsers");
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        context.startActivity(intent);
+                                    }
+                                });
+                            } else {
+                                // The current user is neither a doctor nor a normal user
+                                // Do whatever you need to do here
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Handle any errors here
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors here
+            }
+        });
+
+
+
+
 
     }
 
