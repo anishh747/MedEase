@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.medease.DoctorListActivity;
 import com.example.medease.Model.Doctors;
 import com.example.medease.Model.NormalUsers;
-import com.example.medease.R;
 import com.example.medease.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +38,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        //getUserType();
+
+        getUserType();
 
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
@@ -76,77 +76,77 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-//    private void getUserType() {
-//
-//        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference();
-//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//
-//        usersRef.child("Users").child("Doctor").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//
-//                    getUserInformation("Doctor");
-//
-//                } else {
-//                    // The current user is not a doctor, so check if they are a normal user
-//                    usersRef.child("Users").child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            if (dataSnapshot.exists()) {
-//
-//                                getUserInformation("NormalUsers");
-//
-//                            } else {
-//                                // The current user is neither a doctor nor a normal user
-//                                // Do whatever you need to do here
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError databaseError) {
-//                            // Handle any errors here
-//                        }
-//                    });
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle any errors here
-//            }
-//        });
-//
-//    }
+    private void getUserType() {
 
-//    private void getUserInformation(String userType) {
-//        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userType).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//
-//        userRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    if (userType.equals("NormalUsers")) {
-//                        NormalUsers user = snapshot.getValue(NormalUsers.class);
-//                        Log.i("Normal User Name",user.getUsername());
-//                        username.setText(user.getUsername());
-//
-//                        if (user.getImage() != null) {
-//                            Picasso.get().load(user.getImage()).into(userimage);
-//                        }
-//                    } else if (userType.equals("Doctors")) {
-//                        Doctors doctor = snapshot.getValue(Doctors.class);
-//                        homepagBindinge.homepagename.setText(doctor.getUsername());
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e(TAG, "getUserInformation: onCancelled: " + error.getMessage());
-//            }
-//        });
-//    }
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        usersRef.child("Users").child("Doctor").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    getUserInformation("Doctor");
+
+                } else {
+                    // The current user is not a doctor, so check if they are a normal user
+                    usersRef.child("Users").child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+
+                                getUserInformation("NormalUsers");
+
+                            } else {
+                                // The current user is neither a doctor nor a normal user
+                                // Do whatever you need to do here
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Handle any errors here
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors here
+            }
+        });
+
+    }
+
+    private void getUserInformation(String userType) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userType).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (userType.equals("NormalUsers")) {
+                        NormalUsers user = snapshot.getValue(NormalUsers.class);
+                        Log.i("Normal User Name",user.getUsername());
+                        homepagBindinge.textView3.setText(user.getUsername());
+
+                        if (user.getImage() != null) {
+                            Picasso.get().load(user.getImage()).into(homepagBindinge.homepageImage);
+                        }
+                    } else if (userType.equals("Doctors")) {
+                        Doctors doctor = snapshot.getValue(Doctors.class);
+                        homepagBindinge.textView3.setText(doctor.getUsername());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "getUserInformation: onCancelled: " + error.getMessage());
+            }
+        });
+    }
 
     @Override
     public void onDestroyView() {

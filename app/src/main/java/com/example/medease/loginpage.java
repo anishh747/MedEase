@@ -45,12 +45,12 @@ public class loginpage extends AppCompatActivity {
 
 
 
-//        registertext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-//            }
-//        });
+        loginpageBinding.signupuserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(loginpage.this, userregisteractivity.class));
+            }
+        });
         loginpageBinding.loginButton.setOnClickListener(view1 -> {
             String email = loginpageBinding.email.getText().toString();
             String password = loginpageBinding.password.getText().toString();

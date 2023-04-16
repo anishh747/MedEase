@@ -25,9 +25,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.jitsi.meet.sdk.JitsiMeet;
+import org.jitsi.meet.sdk.JitsiMeetActivity;
+import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
+import org.jitsi.meet.sdk.JitsiMeetOngoingConferenceService;
 
 public class ChatActivity extends AppCompatActivity {
     ImageView userimage;
@@ -41,6 +46,8 @@ public class ChatActivity extends AppCompatActivity {
     ChatAdapter chatAdapter;
     RecyclerView.Adapter adapter;
     String image;
+    URL serverUrl;
+    String videoRoomCode = "abxyz";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,19 @@ public class ChatActivity extends AppCompatActivity {
         usertype =getIntent().getStringExtra("usertype");
         Log.i("usertype",usertype);
         Log.i("Userid",userid);
+
+
+
+        try {
+            serverUrl = new URL("https://meet.jit.si");
+            JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder().setServerURL(serverUrl).build();
+            JitsiMeet.setDefaultConferenceOptions(options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        findViewById(R.id.videoCallBtn).setOnClickListener(view -> {
+            startVideoCall();
+        });
 
         FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -126,6 +146,14 @@ public class ChatActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    private void startVideoCall() {
+            JitsiMeetConferenceOptions meetConferenceOptions = new JitsiMeetConferenceOptions.Builder()
+                    .setRoom(videoRoomCode)
+                    .setFeatureFlag("welcomepage.enabled", false)
+                    .build();
+            JitsiMeetActivity.launch(ChatActivity.this,meetConferenceOptions);
     }
 
     private void getmessages() {
