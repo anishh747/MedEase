@@ -50,7 +50,7 @@ public class ShopFragment extends Fragment {
         binding = FragmentShopBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        binding.myCartLayout.setVisibility(View.GONE);
         prodItemRecycler1=binding.productRecycler1;
         prodItemRecycler2=binding.productRecycler2;
         prodItemRecycler3=binding.productRecycler3;
@@ -112,6 +112,14 @@ public class ShopFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+        });
+
+        binding.myCartBtn.setOnClickListener(view -> {
+                binding.myCartLayout.setVisibility(view.VISIBLE);
+        });
+
+        binding.myCartBackBtn.setOnClickListener(view -> {
+                binding.myCartLayout.setVisibility(view.GONE);
         });
 
         return root;

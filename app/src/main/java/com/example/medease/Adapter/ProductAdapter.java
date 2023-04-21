@@ -1,23 +1,15 @@
 package com.example.medease.Adapter;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.telecom.Call;
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.medease.Model.Products;
 import com.example.medease.ProductDetails;
 import com.example.medease.R;
@@ -46,23 +38,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull final ProductViewHolder holder, int position) {
-
-
-        //Products products = productsList.get(position);
-
-        //Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
         Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
-        //Glide.with(holder.prodImage.getContext()).load().into(holder.prodImage);
         holder.prodName.setText(productsList.get(position).getProductName());
         holder.prodPrice.setText(productsList.get(position).getProductPrice());
-        //holder.prodImage.setImageResource(R.drawable.appointmenticon);
-                    Log.e("Product Name",productsList.get(position).getProductName());
-                    Log.e("ImageUrl",productsList.get(position).getImageUrl());
-                    Log.e("Price",productsList.get(position).getProductPrice());
 
-
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.prodImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ProductDetails.class);
@@ -71,6 +51,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 pairs[0] = new Pair<View, String>(holder.prodImage, "image");
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity) context, pairs);
                */ context.startActivity(i/*, activityOptions.toBundle()*/);
+            }
+        });
+
+        holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -86,6 +73,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         ImageView prodImage;
         TextView prodName, prodQty, prodPrice;
+        Button addToCartBtn;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +82,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             prodName = itemView.findViewById(R.id.prod_name);
             prodPrice = itemView.findViewById(R.id.prod_price);
             prodQty = itemView.findViewById(R.id.prod_qty);
+            addToCartBtn = itemView.findViewById(R.id.addToCartBtn);
 
 
         }
