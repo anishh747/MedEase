@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MedEase"
         tools:targetApi="31">
         <activity
+            android:name=".AddProducts"
+            android:exported="false" />
+        <activity
             android:name=".ProductDetails"
             android:exported="false" />
         <activity
@@ -34,7 +37,8 @@
             android:exported="false" />
         <activity
             android:name=".ImageSetupActivity"
-            android:exported="false" />
+            android:exported="true"/>
+
         <activity
             android:name=".userregisteractivity"
             android:exported="false" />
@@ -47,6 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".DoctorRegisterActivity"
             android:exported="false" />

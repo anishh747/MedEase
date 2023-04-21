@@ -1,7 +1,9 @@
 package com.example.medease.Adapter;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.telecom.Call;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.medease.Model.Products;
 import com.example.medease.ProductDetails;
 import com.example.medease.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,10 +47,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull final ProductViewHolder holder, int position) {
 
-        holder.prodImage.setImageResource(productsList.get(position).getImageUrl());
+
+        //Products products = productsList.get(position);
+
+        //Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
+        Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
+        //Glide.with(holder.prodImage.getContext()).load().into(holder.prodImage);
         holder.prodName.setText(productsList.get(position).getProductName());
-        holder.prodQty.setText(productsList.get(position).getProductQty());
         holder.prodPrice.setText(productsList.get(position).getProductPrice());
+        //holder.prodImage.setImageResource(R.drawable.appointmenticon);
+                    Log.e("Product Name",productsList.get(position).getProductName());
+                    Log.e("ImageUrl",productsList.get(position).getImageUrl());
+                    Log.e("Price",productsList.get(position).getProductPrice());
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.example.medease.ui.home;
+package com.example.medease.ui;
 
 import static android.content.ContentValues.TAG;
 
@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.medease.DoctorListActivity;
 import com.example.medease.Model.Doctors;
 import com.example.medease.Model.NormalUsers;
+
 import com.example.medease.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,9 +40,6 @@ public class HomeFragment extends Fragment {
 
 
         getUserType();
-
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
         homepagBindinge = FragmentHomeBinding.inflate(inflater, container, false);
         View root = homepagBindinge.getRoot();

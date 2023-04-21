@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class loginpage extends AppCompatActivity {
 
-    private ActivityLoginpageBinding loginpageBinding;
+    private ActivityLoginpageBinding activityLoginpageBinding;
     private FirebaseAuth mAuth;
 
 
@@ -29,31 +29,31 @@ public class loginpage extends AppCompatActivity {
         // this is not required if we use View Binding
 //        setContentView(R.layout.activity_loginpage);
 
-        loginpageBinding = ActivityLoginpageBinding.inflate(getLayoutInflater());
-        View view = loginpageBinding.getRoot();
+        activityLoginpageBinding = ActivityLoginpageBinding.inflate(getLayoutInflater());
+        View view = activityLoginpageBinding.getRoot();
         setContentView(view);
 
         mAuth = FirebaseAuth.getInstance();
 
 
         //Log.i("username",usernametext);
-        loginpageBinding.loginButton.setOnClickListener( v ->{
-            String usernametext = String.valueOf(loginpageBinding.email.getText());
-            String password = String.valueOf(loginpageBinding.password.getText());
+        activityLoginpageBinding.loginButton.setOnClickListener(v ->{
+            String usernametext = String.valueOf(activityLoginpageBinding.email.getText());
+            String password = String.valueOf(activityLoginpageBinding.password.getText());
             Log.i("username",usernametext);
         } );
 
 
 
-        loginpageBinding.signupuserButton.setOnClickListener(new View.OnClickListener() {
+        activityLoginpageBinding.signupuserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(loginpage.this, userregisteractivity.class));
             }
         });
-        loginpageBinding.loginButton.setOnClickListener(view1 -> {
-            String email = loginpageBinding.email.getText().toString();
-            String password = loginpageBinding.password.getText().toString();
+        activityLoginpageBinding.loginButton.setOnClickListener(view1 -> {
+            String email = activityLoginpageBinding.email.getText().toString();
+            String password = activityLoginpageBinding.password.getText().toString();
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
                 Toast.makeText(loginpage.this, "Empty Columns", Toast.LENGTH_LONG).show();
             }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -65,7 +65,7 @@ public class loginpage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(loginpage.this, "Login Sucessful", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(loginpage.this, Drawer.class));
+                            startActivity(new Intent(loginpage.this, MainActivity.class));
                         }else{
                             Toast.makeText(loginpage.this, "Login Unsucessful", Toast.LENGTH_LONG).show();
                         }
@@ -79,7 +79,7 @@ public class loginpage extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser() != null){
-            startActivity(new Intent(loginpage.this,Drawer.class));
+            startActivity(new Intent(loginpage.this,MainActivity.class));
             finish();
         }
     }

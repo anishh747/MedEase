@@ -1,15 +1,13 @@
-package com.example.medease.ui.find_a_doctor;
+package com.example.medease.ui;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.medease.Adapter.ChatUserAdapter;
@@ -33,7 +31,7 @@ public class FindADoctorFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-         FindADoctorViewModel findADoctorViewModel = new ViewModelProvider(this).get(FindADoctorViewModel.class);
+
 
         fragmentFindADoctorBinding = FragmentFindADoctorBinding.inflate(inflater, container, false);
         View root = fragmentFindADoctorBinding.getRoot();

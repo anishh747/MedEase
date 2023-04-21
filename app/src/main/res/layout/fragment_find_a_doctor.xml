@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.find_a_doctor.FindADoctorFragment"
+    tools:context=".ui.FindADoctorFragment"
     >
 
     <TextView
