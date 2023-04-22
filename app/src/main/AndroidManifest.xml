@@ -19,6 +19,9 @@
             android:name=".AddProducts"
             android:exported="false" />
         <activity
+            android:name=".ui.DoctorAppointment"
+            android:exported="false" />
+        <activity
             android:name=".ProductDetails"
             android:exported="false" />
         <activity

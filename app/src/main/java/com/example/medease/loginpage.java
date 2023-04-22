@@ -12,14 +12,20 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.medease.databinding.ActivityLoginpageBinding;
+import com.example.medease.ui.DoctorAppointment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class loginpage extends AppCompatActivity {
 
-    private ActivityLoginpageBinding activityLoginpageBinding;
+    private ActivityLoginpageBinding loginpageBinding;
     private FirebaseAuth mAuth;
 
 
@@ -29,31 +35,31 @@ public class loginpage extends AppCompatActivity {
         // this is not required if we use View Binding
 //        setContentView(R.layout.activity_loginpage);
 
-        activityLoginpageBinding = ActivityLoginpageBinding.inflate(getLayoutInflater());
-        View view = activityLoginpageBinding.getRoot();
+        loginpageBinding = ActivityLoginpageBinding.inflate(getLayoutInflater());
+        View view = loginpageBinding.getRoot();
         setContentView(view);
 
         mAuth = FirebaseAuth.getInstance();
 
 
         //Log.i("username",usernametext);
-        activityLoginpageBinding.loginButton.setOnClickListener(v ->{
-            String usernametext = String.valueOf(activityLoginpageBinding.email.getText());
-            String password = String.valueOf(activityLoginpageBinding.password.getText());
+        loginpageBinding.loginButton.setOnClickListener( v ->{
+            String usernametext = String.valueOf(loginpageBinding.email.getText());
+            String password = String.valueOf(loginpageBinding.password.getText());
             Log.i("username",usernametext);
         } );
 
 
 
-        activityLoginpageBinding.signupuserButton.setOnClickListener(new View.OnClickListener() {
+        loginpageBinding.signupuserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(loginpage.this, userregisteractivity.class));
             }
         });
-        activityLoginpageBinding.loginButton.setOnClickListener(view1 -> {
-            String email = activityLoginpageBinding.email.getText().toString();
-            String password = activityLoginpageBinding.password.getText().toString();
+        loginpageBinding.loginButton.setOnClickListener(view1 -> {
+            String email = loginpageBinding.email.getText().toString();
+            String password = loginpageBinding.password.getText().toString();
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
                 Toast.makeText(loginpage.this, "Empty Columns", Toast.LENGTH_LONG).show();
             }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -64,8 +70,48 @@ public class loginpage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(loginpage.this, "Login Sucessful", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(loginpage.this, MainActivity.class));
+
+                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference();
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            usersRef.child("Users").child("Doctor").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+
+                                        Toast.makeText(loginpage.this, "Login Sucessful", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(loginpage.this, DoctorAppointment.class));
+
+                                    } else {
+                                        // The current user is not a doctor, so check if they are a normal user
+                                        usersRef.child("Users").child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()) {
+
+                                                    Toast.makeText(loginpage.this, "Login Sucessful", Toast.LENGTH_LONG).show();
+                                                    startActivity(new Intent(loginpage.this, Drawer.class));
+
+                                                } else {
+                                                    // The current user is neither a doctor nor a normal user
+                                                    // Do whatever you need to do here
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                // Handle any errors here
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    // Handle any errors here
+                                }
+                            });
+
                         }else{
                             Toast.makeText(loginpage.this, "Login Unsucessful", Toast.LENGTH_LONG).show();
                         }
@@ -79,7 +125,7 @@ public class loginpage extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser() != null){
-            startActivity(new Intent(loginpage.this,MainActivity.class));
+            startActivity(new Intent(loginpage.this,Drawer.class));
             finish();
         }
     }

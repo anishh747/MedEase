@@ -18,6 +18,7 @@ import com.example.medease.Model.Doctors;
 import com.example.medease.Model.NormalUsers;
 
 import com.example.medease.databinding.FragmentHomeBinding;
+import com.example.medease.loginpage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +44,12 @@ public class HomeFragment extends Fragment {
 
         homepagBindinge = FragmentHomeBinding.inflate(inflater, container, false);
         View root = homepagBindinge.getRoot();
+
+        homepagBindinge.logout.setOnClickListener(v-> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(HomeFragment.this.getActivity(), loginpage.class);
+            startActivity(intent);
+        });
 
         homepagBindinge.cardiologycardview.setOnClickListener(v -> {
             Intent intent = new Intent(HomeFragment.this.getActivity(), DoctorListActivity.class);

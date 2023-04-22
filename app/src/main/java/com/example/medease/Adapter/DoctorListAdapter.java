@@ -1,15 +1,18 @@
 package com.example.medease.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medease.Model.Doctors;
+import com.example.medease.ProfileUI;
 import com.example.medease.R;
 
 import java.util.List;
@@ -33,6 +36,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         private TextView doctorfieldname;
         private TextView experience;
         private TextView price;
+        private CardView doctorlistcardview;
 
 
 
@@ -46,6 +50,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             doctorfieldname = itemView.findViewById(R.id.chatuserfield);
             experience = itemView.findViewById(R.id.chatuserexperience);
             price = itemView.findViewById(R.id.chatuserprice);
+            doctorlistcardview = itemView.findViewById(R.id.doctorlistcardview);
         }
     }
 
@@ -65,6 +70,15 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         holder.username.setText(doctors.getUsername());
         holder.doctorfieldname.setText(doctors.getSpeciality());
         holder.experience.setText(doctors.getExperience());
+
+
+        holder.doctorlistcardview.setOnClickListener( v->{
+            Intent intent = new Intent(context, ProfileUI.class);
+            intent.putExtra("Uid",doctors.getId());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
+        });
 
     }
 

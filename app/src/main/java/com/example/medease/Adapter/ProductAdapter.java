@@ -50,7 +50,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 Pair[] pairs = new Pair[1];
                 pairs[0] = new Pair<View, String>(holder.prodImage, "image");
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity) context, pairs);
-               */ context.startActivity(i/*, activityOptions.toBundle()*/);
+               */
+                context.startActivity(i/*, activityOptions.toBundle()*/);
             }
         });
 

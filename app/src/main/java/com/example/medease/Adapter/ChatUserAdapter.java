@@ -81,7 +81,7 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
 
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
-// Check if the current user is a doctor
+        // Check if the current user is a doctor
         usersRef.child("Doctor").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
