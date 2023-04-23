@@ -147,7 +147,7 @@ public class DoctorAppointment extends AppCompatActivity{
             chip.setText(name);
             chip.setClickable(true);
             chip.setCheckable(true);
-            chip.setChipBackgroundColorResource(android.R.color.transparent);
+            chip.setChipBackgroundColorResource(android.R.color.holo_purple);
 
             chip.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -156,16 +156,16 @@ public class DoctorAppointment extends AppCompatActivity{
                     if (selectedChip == mSelectedChip) {
                         // The same chip was selected, unselect it
                         mSelectedChip.setChecked(false);
-                        mSelectedChip.setChipBackgroundColorResource(android.R.color.transparent);
+                        mSelectedChip.setChipBackgroundColorResource(android.R.color.holo_red_light);
                         mSelectedChip = null;
                     } else {
                         // A new chip was selected, unselect the previous one and select the new one
                         if (mSelectedChip != null) {
                             mSelectedChip.setChecked(false);
-                            mSelectedChip.setChipBackgroundColorResource(android.R.color.transparent);
+                            mSelectedChip.setChipBackgroundColorResource(android.R.color.holo_red_light);
                         }
                         mSelectedChip = selectedChip;
-                        mSelectedChip.setChipBackgroundColorResource(R.color.purple_700);
+                        mSelectedChip.setChipBackgroundColorResource(R.color.lavender);
                     }
                 }
             });

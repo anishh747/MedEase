@@ -85,26 +85,7 @@
                         android:layout_marginTop="15dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/description"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Description :"
-                            android:textColor="#F40707"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/aboutdoctor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="66dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_weight="1"
-                            android:text="A cardiologist evaluates patients who have symptoms of heart disease, such as chest pain, shortness of breath, and irregular heartbeat. They also evaluate patients who have risk factors for heart disease, such as high blood pressure, high cholesterol, and diabetes."
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
