@@ -53,6 +53,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyCartView
         Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
         holder.prodName.setText(productsList.get(position).getProductName());
         holder.prodPrice.setText(productsList.get(position).getProductPrice());
+        holder.prodQuantity.setText(Integer.toString(productsList.get(position).getProductQuantity()));
 
         Log.e("Image Url",productsList.get(position).getImageUrl());
         Log.e("Name",productsList.get(position).getProductName());
@@ -89,7 +90,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyCartView
     public static final class MyCartViewHolder extends RecyclerView.ViewHolder{
 
         ImageView prodImage;
-        TextView prodName, prodPrice;
+        TextView prodName, prodPrice,prodQuantity;
         ImageView deleteBtn;
 
         public MyCartViewHolder(@NonNull View itemView) {
@@ -99,6 +100,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyCartView
             prodName = itemView.findViewById(R.id.prodNameMyCart);
             prodPrice = itemView.findViewById(R.id.productPriceMyCart);
             deleteBtn = itemView.findViewById(R.id.deleteItemBtn);
+            prodQuantity = itemView.findViewById(R.id.quantityMyCart);
 
 
         }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medease.Adapter.MyCartAdapter;
@@ -30,11 +31,14 @@ public class MyCartActivity extends AppCompatActivity {
     public MyCartAdapter myCartAdapter;
     List<Products> productsList = new ArrayList<>();
     RecyclerView recyclerView;
+    TextView totalPriceText;
+    int totalPrice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_cart);
-        
+        totalPrice = 0;
+        totalPriceText = findViewById(R.id.totalPrice);
         recyclerView = findViewById(R.id.myCartRecycler);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
@@ -45,8 +49,10 @@ public class MyCartActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Products products = dataSnapshot.getValue(Products.class);
                     productsList.add(products);
+                    totalPrice += (products.getProductQuantity()*Integer.parseInt(products.getProductPrice()));
                 }
                 setProdItemRecycler();
+                totalPriceText.setText(Integer.toString(totalPrice));
             }
 
             @Override

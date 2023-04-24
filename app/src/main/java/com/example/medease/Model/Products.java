@@ -5,12 +5,24 @@ public class Products {
     String productPrice;
     String imageUrl;
 
+    int productQuantity;
     String productType;
-    public Products(String productName, String productPrice, String imageUrl, String productType) {
+    String productDescription;
+    public Products(String productName, String productPrice, String imageUrl, String productType, String productDescription) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.imageUrl = imageUrl;
         this.productType = productType;
+        this.productDescription = productDescription;
+        productQuantity = 0;
+    }
+
+    public Products(String productName, String productPrice, String imageUrl, String productDescription) {
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.imageUrl = imageUrl;
+        this.productDescription = productDescription;
+        productQuantity = 0;
     }
 
     public Products(){}
@@ -30,6 +42,14 @@ public class Products {
 //        this.productQty = productQty;
 //    }
 
+    public void setProductQuantity(int quantity) {
+        productQuantity = quantity;
+    }
+
+    public  int getProductQuantity() {
+        return productQuantity;
+    }
+
     public String getProductPrice() {
         return productPrice;
     }
@@ -40,6 +60,10 @@ public class Products {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
     }
 
     public void setImageUrl(String imageUrl) {

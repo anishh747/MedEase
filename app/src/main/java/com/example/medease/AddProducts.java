@@ -31,7 +31,7 @@ import java.util.UUID;
 
 public class AddProducts extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
-    EditText productName, productPrice;
+    EditText productName, productPrice, productDescription;
     Uri imageUri;
     ImageView productImage;
     FirebaseStorage firebaseStorage;
@@ -46,6 +46,7 @@ public class AddProducts extends AppCompatActivity {
         setContentView(R.layout.activity_add_products);
         productImage = findViewById(R.id.uploadImage);
         productPrice = findViewById(R.id.productPrice);
+        productDescription = findViewById(R.id.productDescription);
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         productName = findViewById(R.id.productName);
@@ -109,9 +110,10 @@ public class AddProducts extends AppCompatActivity {
         });
 
         findViewById(R.id.doneBtn).setOnClickListener(view -> {
-            if(productName.getText().toString().isEmpty() || productPrice.getText().toString().isEmpty()){
+            if(productName.getText().toString().isEmpty() || productPrice.getText().toString().isEmpty() || productDescription.getText().toString().isEmpty()){
                 productName.setError("Cannot be empty");
                 productPrice.setError("Cannot be empty");
+                productDescription.setError("Cannot be empty");
             }else{
                 //Get a reference to the Firebase Storage location where you want to upload the image
                 StorageReference imageRef = storageReference.child("products/"+productName.getText().toString()+".jpg");
@@ -124,7 +126,7 @@ public class AddProducts extends AppCompatActivity {
                                 imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                     // Save the download URL in Firebase Realtime Database as the image URL for the current user
                                     databaseReference = FirebaseDatabase.getInstance().getReference().child("Products").child(typeOfProduct+"/"+productName.getText().toString());
-                                    Products product = new Products(productName.getText().toString(), productPrice.getText().toString(),uri.toString(), typeOfProduct);
+                                    Products product = new Products(productName.getText().toString(), productPrice.getText().toString(),uri.toString(), typeOfProduct, productDescription.getText().toString());
                                     databaseReference.setValue(product).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {

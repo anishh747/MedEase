@@ -54,6 +54,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ProductDetails.class);
+                i.putExtra("Product_Name",productsList.get(position).getProductName());
+                i.putExtra("Product_Price", productsList.get(position).getProductPrice());
+                i.putExtra("Image_Url",productsList.get(position).getImageUrl());
+                i.putExtra("Product_Description",productsList.get(position).getProductDescription());
+
 /*
                 Pair[] pairs = new Pair[1];
                 pairs[0] = new Pair<View, String>(holder.prodImage, "image");

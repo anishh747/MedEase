@@ -29,19 +29,6 @@
             app:layout_constraintVertical_bias="0.5" />
 
         <TextView
-            android:id="@+id/productPriceMyCart"
-            android:layout_width="75dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="44dp"
-            android:text="$ 15.00"
-            android:textColor="#42995C"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/prodImageMyCart"
-            app:layout_constraintTop_toBottomOf="@+id/prodNameMyCart"
-            app:layout_constraintVertical_bias="0.071" />
-
-        <TextView
             android:id="@+id/prodNameMyCart"
             android:layout_width="190dp"
             android:layout_height="68dp"
@@ -63,6 +50,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_delete_24" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/prodImageMyCart">
+
+            <TextView
+                android:id="@+id/productPriceMyCart"
+                android:layout_width="75dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="12dp"
+                android:text="$ 15.00"
+                android:textColor="#42995C"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity: "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/quantityMyCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="20sp" />
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
