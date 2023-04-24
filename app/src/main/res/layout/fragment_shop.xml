@@ -48,12 +48,13 @@
                 android:id="@+id/addProducts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="28dp"
                 android:text="Add"
-                app:layout_constraintBottom_toTopOf="@+id/product_recycler1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.352"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintEnd_toStartOf="@+id/myCartBtn"
+                app:layout_constraintHorizontal_bias="0.609"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/textView5"
+                app:layout_constraintVertical_bias="1.0"
                 tools:visibility="visible" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -70,7 +71,7 @@
                 android:id="@+id/product_recycler2"
                 android:layout_width="411dp"
                 android:layout_height="500dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +82,7 @@
                 android:id="@+id/product_recycler3"
                 android:layout_width="411dp"
                 android:layout_height="500dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,38 +91,40 @@
 
             <ImageView
                 android:id="@+id/myCartBtn"
-                android:layout_width="44dp"
-                android:layout_height="38dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                android:src="@drawable/baseline_shopping_cart_24"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="3dp"
+                app:layout_constraintBottom_toBottomOf="@+id/addProducts"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/addProducts"
+                app:layout_constraintVertical_bias="0.0"
+                tools:src="@drawable/baseline_shopping_cart_24" />
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="329dp"
+                android:layout_height="47dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintBottom_toTopOf="@+id/product_recycler1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchRecycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/searchView"
+                app:layout_constraintStart_toStartOf="@+id/searchView"
+                app:layout_constraintTop_toBottomOf="@+id/searchView"
+                tools:listitem="@layout/product_search" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/myCartLayout"
-        android:layout_width="200dp"
-
-        android:layout_height="0dp"
-        android:background="@drawable/background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        tools:visibility="visible">
-
-        <ImageView
-            android:id="@+id/myCartBackBtn"
-            android:layout_width="61dp"
-            android:layout_height="57dp"
-            android:src="@drawable/ic_arrowright_foreground" />
-    </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

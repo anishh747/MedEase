@@ -25,27 +25,28 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
 
     Context context;
     List<Products> productsList;
 
 
-    public ProductAdapter(Context context, List<Products> productsList) {
+
+    public SearchAdapter(Context context, List<Products> productsList) {
         this.context = context;
         this.productsList = productsList;
     }
 
     @NonNull
     @Override
-    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.products_row_item, parent, false);
-        return new ProductViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.product_search, parent, false);
+        return new SearchViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull final SearchViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
         holder.prodName.setText(productsList.get(position).getProductName());
         holder.prodPrice.setText(productsList.get(position).getProductPrice());
@@ -62,30 +63,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 context.startActivity(i/*, activityOptions.toBundle()*/);
             }
         });
-
-        holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference databaseReference = firebaseDatabase.getReference();
-
-                databaseReference.child("MyCart").child(FirebaseAuth.getInstance().getUid()).child(holder.prodName.getText().toString()).setValue(productsList.get(position)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(context, "Added To Cart Successfully", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context, "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-            }
-        });
-
-
     }
 
     @Override
@@ -93,13 +70,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return productsList.size();
     }
 
-    public static final class ProductViewHolder extends RecyclerView.ViewHolder{
+    public static final class SearchViewHolder extends RecyclerView.ViewHolder{
 
         ImageView prodImage;
         TextView prodName, prodQty, prodPrice;
         Button addToCartBtn;
 
-        public ProductViewHolder(@NonNull View itemView) {
+        public SearchViewHolder(@NonNull View itemView) {
             super(itemView);
 
             prodImage = itemView.findViewById(R.id.prodImageMyCart);

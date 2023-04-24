@@ -7,7 +7,7 @@
     android:layout_marginStart="40dp">
 
     <ImageView
-        android:id="@+id/prod_image"
+        android:id="@+id/prodImageMyCart"
         android:layout_width="221dp"
         android:layout_height="355dp"
         android:layout_marginTop="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/prod_price"
+        android:id="@+id/productPriceMyCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="@+id/prod_qty" />
 
     <TextView
-        android:id="@+id/prod_name"
+        android:id="@+id/prodNameMyCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -42,10 +42,10 @@
         android:text="Japanese Cherry Blossom"
         android:textColor="@android:color/background_dark"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="@+id/prod_image"
+        app:layout_constraintEnd_toEndOf="@+id/prodImageMyCart"
         app:layout_constraintHorizontal_bias="0.434"
-        app:layout_constraintStart_toStartOf="@+id/prod_image"
-        app:layout_constraintTop_toBottomOf="@+id/prod_image" />
+        app:layout_constraintStart_toStartOf="@+id/prodImageMyCart"
+        app:layout_constraintTop_toBottomOf="@+id/prodImageMyCart" />
 
     <Button
         android:id="@+id/addToCartBtn"

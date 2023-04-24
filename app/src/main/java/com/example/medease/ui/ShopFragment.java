@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.medease.Adapter.ProductAdapter;
 import com.example.medease.AddProducts;
 import com.example.medease.Model.Products;
+import com.example.medease.MyCartActivity;
 import com.example.medease.R;
 import com.example.medease.databinding.FragmentShopBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,12 +38,14 @@ public class ShopFragment extends Fragment {
 
     private FragmentShopBinding binding;
 
-    RecyclerView prodItemRecycler1, prodItemRecycler2, prodItemRecycler3;
+    RecyclerView prodItemRecycler1, prodItemRecycler2, prodItemRecycler3, searchRecycler;
     ProductAdapter productAdapter;
 
+    SearchView searchView;
     List<Products> productsList1 = new ArrayList<>();
     List<Products> productsList2 = new ArrayList<>();
     List<Products> productsList3 = new ArrayList<>();
+    List<Products> allProductList = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,7 +54,9 @@ public class ShopFragment extends Fragment {
         binding = FragmentShopBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.myCartLayout.setVisibility(View.GONE);
+
+        searchView = binding.searchView;
+        searchRecycler = binding.searchRecycler;
         prodItemRecycler1=binding.productRecycler1;
         prodItemRecycler2=binding.productRecycler2;
         prodItemRecycler3=binding.productRecycler3;
@@ -64,6 +70,26 @@ public class ShopFragment extends Fragment {
             }
         });
 
+        binding.myCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ShopFragment.this.getActivity(), MyCartActivity.class));
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                return false;
+            }
+        });
+
 
 
         databaseReference.child("Medicines").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -73,6 +99,7 @@ public class ShopFragment extends Fragment {
                     Products products = dataSnapshot.getValue(Products.class);
 
                     productsList1.add(products);
+                    allProductList.add(products);
                 }
                 databaseReference.child("Nutrition").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -81,6 +108,8 @@ public class ShopFragment extends Fragment {
                             Products products = dataSnapshot.getValue(Products.class);
 
                             productsList2.add(products);
+                            allProductList.add(products);
+
                         }
                         databaseReference.child("Other").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -89,6 +118,8 @@ public class ShopFragment extends Fragment {
                                     Products products = dataSnapshot.getValue(Products.class);
 
                                     productsList3.add(products);
+                                    allProductList.add(products);
+
                                 }
                                 setProdItemRecycler();
                             }
@@ -113,15 +144,6 @@ public class ShopFragment extends Fragment {
 
             }
         });
-
-        binding.myCartBtn.setOnClickListener(view -> {
-                binding.myCartLayout.setVisibility(view.VISIBLE);
-        });
-
-        binding.myCartBackBtn.setOnClickListener(view -> {
-                binding.myCartLayout.setVisibility(view.GONE);
-        });
-
         return root;
     }
 

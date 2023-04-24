@@ -90,7 +90,7 @@ public class loginpage extends AppCompatActivity {
                                                 if (dataSnapshot.exists()) {
 
                                                     Toast.makeText(loginpage.this, "Login Sucessful", Toast.LENGTH_LONG).show();
-                                                    startActivity(new Intent(loginpage.this, Drawer.class));
+                                                    startActivity(new Intent(loginpage.this, MainActivity.class));
 
                                                 } else {
                                                     // The current user is neither a doctor nor a normal user
@@ -125,7 +125,7 @@ public class loginpage extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser() != null){
-            startActivity(new Intent(loginpage.this,Drawer.class));
+            startActivity(new Intent(loginpage.this,MainActivity.class));
             finish();
         }
     }
