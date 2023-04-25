@@ -129,20 +129,20 @@ public class HomeFragment extends Fragment {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    if (userType.equals("NormalUsers")) {
-                        NormalUsers user = snapshot.getValue(NormalUsers.class);
-                        Log.i("Normal User Name",user.getUsername());
-                        homepagBindinge.textView3.setText(user.getUsername());
-
-                        if (user.getImage() != null) {
-                            Picasso.get().load(user.getImage()).into(homepagBindinge.homepageImage);
-                        }
-                    } else if (userType.equals("Doctors")) {
-                        Doctors doctor = snapshot.getValue(Doctors.class);
-                        homepagBindinge.textView3.setText(doctor.getUsername());
-                    }
-                }
+//                if (snapshot.exists()) {
+//                    if (userType.equals("NormalUsers")) {
+//                        NormalUsers user = snapshot.getValue(NormalUsers.class);
+//                        Log.i("Normal User Name",user.getUsername());
+//                        //homepagBindinge.textView3.setText(user.getUsername());
+//
+//                        if (user.getImage() != null) {
+//                            Picasso.get().load(user.getImage()).into(homepagBindinge.homepageImage);
+//                        }
+//                    } else if (userType.equals("Doctor")) {
+//                        Doctors doctor = snapshot.getValue(Doctors.class);
+//                        //homepagBindinge.textView3.setText(doctor.getUsername());
+//                    }
+//                }
             }
 
             @Override

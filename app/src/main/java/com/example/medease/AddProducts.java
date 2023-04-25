@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class AddProducts extends AppCompatActivity {
@@ -126,6 +127,7 @@ public class AddProducts extends AppCompatActivity {
                                 imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                     // Save the download URL in Firebase Realtime Database as the image URL for the current user
                                     databaseReference = FirebaseDatabase.getInstance().getReference().child("Products").child(typeOfProduct+"/"+productName.getText().toString());
+
                                     Products product = new Products(productName.getText().toString(), productPrice.getText().toString(),uri.toString(), typeOfProduct, productDescription.getText().toString());
                                     databaseReference.setValue(product).addOnFailureListener(new OnFailureListener() {
                                         @Override

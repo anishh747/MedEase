@@ -8,15 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.medease.Model.Doctors;
-import com.example.medease.databinding.ActivityDoctorAppointmentBinding;
 import com.example.medease.databinding.ActivityProfileUiBinding;
-import com.example.medease.ui.DoctorAppointment;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +35,7 @@ public class ProfileUI extends AppCompatActivity {
     ActivityProfileUiBinding binding;
     ArrayList<String> datelist ;
     private  Chip mSelectedChip;
-    String userid;
+    String doctorid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +52,9 @@ public class ProfileUI extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        userid = intent.getStringExtra("Uid");
+        doctorid = intent.getStringExtra("Uid");
 
-        getDoctorInfo(userid);
+        getDoctorInfo(doctorid);
 
         final Calendar c= Calendar.getInstance();
         mDate = c.get(Calendar.DATE);
@@ -82,7 +79,7 @@ public class ProfileUI extends AppCompatActivity {
 
     private void getDoctorInfo(String userid) {
         FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor")
-                .child(userid).addValueEventListener(new ValueEventListener() {
+                .child(doctorid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Doctors doctors = snapshot.getValue(Doctors.class);
@@ -117,7 +114,7 @@ public class ProfileUI extends AppCompatActivity {
         String date = binding.date.getText().toString();
         Log.i("Date",date);
 
-        FirebaseDatabase.getInstance().getReference().child("Appointment").child(userid)
+        FirebaseDatabase.getInstance().getReference().child("Appointment").child(doctorid)
                 .child(binding.date.getText().toString()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -175,12 +172,19 @@ public class ProfileUI extends AppCompatActivity {
             if (mSelectedChip != null) {
                 String selectedChipText = mSelectedChip.getText().toString();
                 Log.i("Selected chip text:" , selectedChipText.toString());
+                Log.i("Date Appointment:" , binding.date.getText().toString());
 
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Appointment").child(userid)
-                        .child(binding.date.getText().toString()).child(selectedChipText);
 
-                reference.child("Doctor_Uid").setValue(userid);
-                reference.child("Patient_Uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+                Intent intent = new Intent(ProfileUI.this,BookAppointment.class);
+                intent.putExtra("doctorid",doctorid);
+                intent.putExtra("userid",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                intent.putExtra("chiptext",selectedChipText);
+                intent.putExtra("Date",binding.date.getText().toString());
+                startActivity(intent);
+
+
             } else {
                 Log.i("Chips", "No chip selected");
             }
