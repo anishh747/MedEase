@@ -16,8 +16,6 @@ import android.widget.TextView;
 
 public class bmiactivity extends AppCompatActivity {
 
-
-
     TextView mbmidisplay,magedisplay,mweightdisplay,mheightdisplay,mbmicategory,mgender;
     Button mgotomain;
     Intent intent;
@@ -91,7 +89,7 @@ public class bmiactivity extends AppCompatActivity {
         else if(intbmi<16.9 && intbmi>16)
         {
             mbmicategory.setText("Moderate Thinness");
-            mbackground.setBackgroundColor(R.color.halfwarn);
+            mbackground.setBackgroundColor(R.color.lavender);
             mimageview.setImageResource(R.drawable.warning);
             //   mimageview.setBackground(colorDrawable2);
 
@@ -99,7 +97,7 @@ public class bmiactivity extends AppCompatActivity {
         else if(intbmi<18.4 && intbmi>17)
         {
             mbmicategory.setText("Mild Thinness");
-            mbackground.setBackgroundColor(R.color.halfwarn);
+            mbackground.setBackgroundColor(R.color.lavender);
             mimageview.setImageResource(R.drawable.warning);
             //   mimageview.setBackground(colorDrawable2);
         }
@@ -113,21 +111,21 @@ public class bmiactivity extends AppCompatActivity {
         else if(intbmi <29.9 && intbmi>25)
         {
             mbmicategory.setText("Overweight");
-            mbackground.setBackgroundColor(R.color.halfwarn);
+            mbackground.setBackgroundColor(R.color.lavender);
             mimageview.setImageResource(R.drawable.warning);
             //mimageview.setBackground(colorDrawable2);
         }
         else if(intbmi<34.9 && intbmi>30)
         {
             mbmicategory.setText("Obese Class I");
-            mbackground.setBackgroundColor(R.color.halfwarn);
+            mbackground.setBackgroundColor(R.color.lavender);
             mimageview.setImageResource(R.drawable.warning);
             //  mimageview.setBackground(colorDrawable2);
         }
         else
         {
             mbmicategory.setText("Obese Class II");
-            mbackground.setBackgroundColor(R.color.warn);
+            mbackground.setBackgroundColor(R.color.lavender);
             mimageview.setImageResource(R.drawable.crosss);
             //  mimageview.setBackground(colorDrawable2);
         }

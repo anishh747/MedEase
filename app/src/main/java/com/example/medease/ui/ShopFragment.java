@@ -19,17 +19,15 @@ import com.example.medease.Adapter.ProductAdapter;
 import com.example.medease.AddProducts;
 import com.example.medease.Model.Products;
 import com.example.medease.MyCartActivity;
-import com.example.medease.R;
-import com.example.medease.databinding.FragmentShopBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-
+import com.example.medease.databinding.FragmentShopBinding;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShopFragment extends Fragment {
@@ -42,10 +40,13 @@ public class ShopFragment extends Fragment {
     ProductAdapter productAdapter;
 
     SearchView searchView;
+
+    HashMap<String,Object> map1;
+    HashMap<String,Object> map2;
+    HashMap<String,Object> map3;
     List<Products> productsList1 = new ArrayList<>();
     List<Products> productsList2 = new ArrayList<>();
     List<Products> productsList3 = new ArrayList<>();
-    List<Products> allProductList = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,6 +54,7 @@ public class ShopFragment extends Fragment {
 
         binding = FragmentShopBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        GenericTypeIndicator<HashMap<String, Object>> typeIndicator = new GenericTypeIndicator<HashMap<String, Object>>() {};
 
 
         searchView = binding.searchView;
@@ -97,18 +99,16 @@ public class ShopFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Products products = dataSnapshot.getValue(Products.class);
-
                     productsList1.add(products);
-                    allProductList.add(products);
+                    //map1 = dataSnapshot.getValue(typeIndicator);
                 }
                 databaseReference.child("Nutrition").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Products products = dataSnapshot.getValue(Products.class);
-
+                            //map2 = dataSnapshot.getValue(typeIndicator);
                             productsList2.add(products);
-                            allProductList.add(products);
 
                         }
                         databaseReference.child("Other").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -117,8 +117,9 @@ public class ShopFragment extends Fragment {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     Products products = dataSnapshot.getValue(Products.class);
 
+                                    //map3 = dataSnapshot.getValue(typeIndicator);
                                     productsList3.add(products);
-                                    allProductList.add(products);
+
 
                                 }
                                 setProdItemRecycler();

@@ -7,12 +7,12 @@
     tools:context=".ui.HomeFragment"
     android:background="@drawable/background">
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:background="@drawable/buttonbackground"/>
+<!--    <Button-->
+<!--        android:id="@+id/logout"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Logout"-->
+<!--        android:background="@drawable/buttonbackground"/>-->
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/homepageImage"

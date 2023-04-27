@@ -68,7 +68,7 @@ public class ProductDetails extends AppCompatActivity {
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
                 Products product = new Products(bundle.getString("Product_Name"),bundle.getString("Product_Price"),bundle.getString("Image_Url"),bundle.getString("Product_Description"));
-                product.setProductQuantity(numberPicker.getDisplayNum());
+                product.setProductQuantity(Integer.toString(numberPicker.getDisplayNum()));
                 databaseReference.child("MyCart").child(FirebaseAuth.getInstance().getUid()).child(bundle.getString("Product_Name")).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

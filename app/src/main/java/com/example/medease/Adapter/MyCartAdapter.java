@@ -1,5 +1,8 @@
 package com.example.medease.Adapter;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -53,7 +56,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyCartView
         Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
         holder.prodName.setText(productsList.get(position).getProductName());
         holder.prodPrice.setText(productsList.get(position).getProductPrice());
-        holder.prodQuantity.setText(Integer.toString(productsList.get(position).getProductQuantity()));
+        holder.prodQuantity.setText(productsList.get(position).getProductQuantity());
 
         Log.e("Image Url",productsList.get(position).getImageUrl());
         Log.e("Name",productsList.get(position).getProductName());
@@ -68,7 +71,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyCartView
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Intent i = new Intent(context, MyCartActivity.class);
-
+                            i.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                             Toast.makeText(context, "Item Removed Successfully", Toast.LENGTH_SHORT).show();
                             context.startActivity(i);
                         }

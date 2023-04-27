@@ -45,11 +45,11 @@ public class HomeFragment extends Fragment {
         homepagBindinge = FragmentHomeBinding.inflate(inflater, container, false);
         View root = homepagBindinge.getRoot();
 
-        homepagBindinge.logout.setOnClickListener(v-> {
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(HomeFragment.this.getActivity(), loginpage.class);
-            startActivity(intent);
-        });
+//        homepagBindinge.logout.setOnClickListener(v-> {
+//            FirebaseAuth.getInstance().signOut();
+//            Intent intent = new Intent(HomeFragment.this.getActivity(), loginpage.class);
+//            startActivity(intent);
+//        });
 
         homepagBindinge.cardiologycardview.setOnClickListener(v -> {
             Intent intent = new Intent(HomeFragment.this.getActivity(), DoctorListActivity.class);

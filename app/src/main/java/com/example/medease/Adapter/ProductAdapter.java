@@ -73,6 +73,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             public void onClick(View view) {
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
+                productsList.get(position).setProductQuantity("1");
 
                 databaseReference.child("MyCart").child(FirebaseAuth.getInstance().getUid()).child(holder.prodName.getText().toString()).setValue(productsList.get(position)).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -118,4 +119,3 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
 }
-
