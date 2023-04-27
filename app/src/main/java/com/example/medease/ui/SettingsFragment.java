@@ -101,6 +101,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(SettingsFragment.this.getActivity(), loginpage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
