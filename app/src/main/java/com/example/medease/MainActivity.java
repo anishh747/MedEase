@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.example.medease.ui.FindADoctorFragment;
 import com.example.medease.ui.HomeFragment;
 import com.example.medease.ui.ShopFragment;
-import com.example.medease.ui.SlideshowFragment;
+import com.example.medease.ui.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
                     fragmentInstance = new ShopFragment();
                     break;
 
-                case (R.id.nav_slideshow):
-                    fragmentInstance = new SlideshowFragment();
+                case (R.id.nav_settings):
+                    fragmentInstance = new SettingsFragment();
                     break;
             }
 

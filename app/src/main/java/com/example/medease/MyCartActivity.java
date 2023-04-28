@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ public class MyCartActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView totalPriceText;
     int totalPrice;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,15 +53,25 @@ public class MyCartActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Products products = dataSnapshot.getValue(Products.class);
                     productsList.add(products);
-                    totalPrice += (products.getProductQuantity()*Integer.parseInt(products.getProductPrice()));
+                    totalPrice += (Integer.parseInt(products.getProductQuantity())*Integer.parseInt(products.getProductPrice()));
                 }
                 setProdItemRecycler();
+
                 totalPriceText.setText(Integer.toString(totalPrice));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        findViewById(R.id.buttonCheckout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyCartActivity.this ,CheckoutActivity.class);
+                intent.putExtra("TotalPrice",Integer.toString(totalPrice));
+                startActivity(intent);
             }
         });
     }
@@ -69,6 +83,7 @@ public class MyCartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         myCartAdapter = new MyCartAdapter(MyCartActivity.this, productsList);
         recyclerView.setAdapter(myCartAdapter);
+        myCartAdapter.notifyDataSetChanged();
 
     }
 

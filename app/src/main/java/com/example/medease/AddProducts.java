@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -53,29 +54,6 @@ public class AddProducts extends AppCompatActivity {
         productName = findViewById(R.id.productName);
         radioGroup = findViewById(R.id.radioGroup);
 
-//        findViewById(R.id.radioGroup).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Is the button now checked?
-//                boolean checked = ((RadioButton) view).isChecked();
-//
-//                // Check which radio button was clicked
-//                switch(view.getId()) {
-//                    case R.id.radioButtonMedicine:
-//                        if (checked)
-//                            typeOfProduct = "Medicine";
-//                            break;
-//                    case R.id.radioButtonNutrition:
-//                        if (checked)
-//                            typeOfProduct = "Nutrition";
-//                            break;
-//                    case R.id.radioButtonOther:
-//                        if(checked)
-//                            typeOfProduct = "Other";
-//                            break;
-//                }
-//            }
-//        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -95,8 +73,6 @@ public class AddProducts extends AppCompatActivity {
                 if(result.getResultCode() == RESULT_OK && result.getData() != null){
                     imageUri = result.getData().getData();
                     productImage.setImageURI(imageUri);
-
-
                 }
             }
         });
@@ -128,8 +104,17 @@ public class AddProducts extends AppCompatActivity {
                                     // Save the download URL in Firebase Realtime Database as the image URL for the current user
                                     databaseReference = FirebaseDatabase.getInstance().getReference().child("Products").child(typeOfProduct+"/"+productName.getText().toString());
 
-                                    Products product = new Products(productName.getText().toString(), productPrice.getText().toString(),uri.toString(), typeOfProduct, productDescription.getText().toString());
-                                    databaseReference.setValue(product).addOnFailureListener(new OnFailureListener() {
+                                    //Products product = new Products(productName.getText().toString(), productPrice.getText().toString(),uri.toString(), typeOfProduct, productDescription.getText().toString());
+
+                                    HashMap<String,Object> map = new HashMap<>();
+                                    map.put("productName", productName.getText().toString());
+                                    map.put("productPrice",productPrice.getText().toString());
+                                    map.put("imageUrl",uri.toString());
+                                    map.put("Type",typeOfProduct);
+                                    map.put("productDescription",productDescription.getText().toString());
+                                    map.put("UserId",FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                                    databaseReference.setValue(map).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Toast.makeText(AddProducts.this, "Failed to set in database", Toast.LENGTH_SHORT).show();
