@@ -11,7 +11,7 @@
         android:id="@+id/appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@color/teal_700"
+        android:background="#F60737"
         >
 
         <androidx.appcompat.widget.Toolbar

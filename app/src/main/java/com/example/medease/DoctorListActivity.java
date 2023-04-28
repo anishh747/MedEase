@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -14,7 +18,9 @@ import com.example.medease.Model.Doctors;
 import com.example.medease.databinding.ActivityDoctorListBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,7 +40,6 @@ public class DoctorListActivity extends AppCompatActivity {
 
         doctorListBinding = ActivityDoctorListBinding.inflate(getLayoutInflater());
         setContentView(doctorListBinding.getRoot());
-
 
         doctorsList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -66,6 +71,75 @@ public class DoctorListActivity extends AppCompatActivity {
                 break;
         }
 
+        readUser();
+        doctorListBinding.doctorSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchUser(charSequence.toString());
+                Log.i("textt changed","searchtext");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+    }
+
+    private void searchUser(String s) {
+        Query databasequery = FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor")
+                .orderByChild("Username").startAt(s).endAt(s +"\uf8ff");
+        databasequery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                doctorsList.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Doctors doctors = dataSnapshot.getValue(Doctors.class);
+                    doctorsList.add(doctors);
+                }
+                doctorListAdapter = new DoctorListAdapter(getApplicationContext(),doctorsList);
+                doctorListBinding.userlistrecyclerview.setAdapter(doctorListAdapter);
+                doctorListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void readUser() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child("Doctor");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(TextUtils.isEmpty(doctorListBinding.doctorSearch.getText().toString())){
+                    doctorsList.clear();
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        Doctors doctors = dataSnapshot.getValue(Doctors.class);
+                        doctorsList.add(doctors);
+                    }
+                    doctorListAdapter = new DoctorListAdapter(getApplicationContext(),doctorsList);
+                    doctorListBinding.userlistrecyclerview.setAdapter(doctorListAdapter);
+                    doctorListAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 

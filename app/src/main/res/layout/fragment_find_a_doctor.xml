@@ -7,50 +7,55 @@
     tools:context=".ui.FindADoctorFragment"
     >
 
-    <TextView
-        android:id="@+id/textFind_a_doctor"
+    <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="136dp"
+        android:background="@drawable/top_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:layout_width="99dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="59dp"
-        android:text="CHAT"
-        android:textSize="28dp"
-        android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/chatusersearch"
-        android:layout_width="349dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="113dp"
-        android:background="@drawable/buttonbackground"
-        android:hint="SEARCH"
-        android:padding="10dp"
-        android:paddingStart="20dp"
-        android:textStyle="bold"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="30dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="20dp">
+
+
+
+        <EditText
+            android:id="@+id/chatusersearch"
+            android:layout_width="371dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttonbackground"
+            android:hint="SEARCH"
+            android:padding="10dp"
+            android:paddingStart="60dp"
+            android:textStyle="bold" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="38dp"
+            android:src="@drawable/search_icon" />
+
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatuserrecyclerview"
         android:layout_width="408dp"
         android:layout_height="535dp"
-        android:layout_below="@+id/chatusersearch"
+        android:layout_below="@+id/cardview"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="24dp" />
+        android:layout_marginStart="0dp" />
 
 
 </RelativeLayout>

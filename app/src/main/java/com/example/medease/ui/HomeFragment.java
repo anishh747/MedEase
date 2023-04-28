@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.medease.DoctorListActivity;
+import com.example.medease.Fitness;
 import com.example.medease.Model.Doctors;
 import com.example.medease.Model.NormalUsers;
 
@@ -77,6 +78,11 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
+        homepagBindinge.appointmentcardview.setOnClickListener(v->{
+            Intent intent = new Intent(HomeFragment.this.getActivity(), Fitness.class);
+            startActivity(intent);
+        });
+
         return root;
     }
 
@@ -129,20 +135,20 @@ public class HomeFragment extends Fragment {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    if (userType.equals("NormalUsers")) {
-//                        NormalUsers user = snapshot.getValue(NormalUsers.class);
-//                        Log.i("Normal User Name",user.getUsername());
-//                        //homepagBindinge.textView3.setText(user.getUsername());
-//
-//                        if (user.getImage() != null) {
-//                            Picasso.get().load(user.getImage()).into(homepagBindinge.homepageImage);
-//                        }
-//                    } else if (userType.equals("Doctor")) {
-//                        Doctors doctor = snapshot.getValue(Doctors.class);
-//                        //homepagBindinge.textView3.setText(doctor.getUsername());
-//                    }
-//                }
+                if (snapshot.exists()) {
+                    if (userType.equals("NormalUsers")) {
+                        NormalUsers user = snapshot.getValue(NormalUsers.class);
+                        Log.i("Normal User Name",user.getUsername());
+                        homepagBindinge.textView3.setText(user.getUsername());
+
+                        if (user.getImage() != null) {
+                            Picasso.get().load(user.getImage()).into(homepagBindinge.homepageImage);
+                        }
+                    } else if (userType.equals("Doctor")) {
+                        Doctors doctor = snapshot.getValue(Doctors.class);
+                        homepagBindinge.textView3.setText(doctor.getUsername());
+                    }
+                }
             }
 
             @Override

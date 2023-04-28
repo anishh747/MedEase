@@ -143,6 +143,7 @@ public class ProfileUI extends AppCompatActivity {
             chip.setText(name);
             chip.setClickable(true);
             chip.setCheckable(true);
+            chip.setBackground(R.drawable.buttonbackground);
             chip.setChipBackgroundColorResource(android.R.color.holo_red_light);
 
             chip.setOnClickListener(v -> {

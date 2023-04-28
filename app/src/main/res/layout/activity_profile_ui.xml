@@ -186,18 +186,29 @@
                             android:src="@drawable/calender"/>
                     </LinearLayout>
 
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chip_group"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="147dp"
-                        android:background="#F4D9D9"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="0dp"
-                        android:checkableBehavior="single"
-                        app:chipSpacingHorizontal="8dp"
-                        app:chipSpacingVertical="8dp" />
+                        android:layout_height="115dp"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="20dp"
+                        android:layout_marginTop="20dp">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chip_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="115dp"
+                            android:background="#F4D9D9"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:checkableBehavior="single"
+                            app:chipSpacingHorizontal="8dp"
+                            app:chipSpacingVertical="8dp"
+                            />
+
+                    </androidx.cardview.widget.CardView>
+
+
+
 
 
                     <Button

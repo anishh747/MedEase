@@ -7,7 +7,7 @@
         android:bottomLeftRadius="0dp"/>
 
     <solid
-        android:color="@color/teal_200"/>
+        android:color="#F10519"/>
 
 
 

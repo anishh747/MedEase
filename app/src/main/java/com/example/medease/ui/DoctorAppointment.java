@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.example.medease.Model.Doctors;
 import com.example.medease.R;
 import com.example.medease.databinding.ActivityDoctorAppointmentBinding;
 import com.example.medease.databinding.ActivityDoctorRegisterBinding;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +50,8 @@ public class DoctorAppointment extends AppCompatActivity{
         setContentView(view);
 
         datelist= new ArrayList<>();
+
+        getUserData();
 
         // Get Current Date
         final Calendar c = Calendar.getInstance();
@@ -110,6 +114,29 @@ public class DoctorAppointment extends AppCompatActivity{
 
         getAppointmentTime();
 
+    }
+
+    private void getUserData() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Doctors doctors = snapshot.getValue(Doctors.class);
+                        binding.username.setText(doctors.getUsername());
+                        binding.userfield.setText(doctors.getSpeciality());
+
+                        if(snapshot.child("Image").getValue() != null){
+                            Picasso.get().load(snapshot.child("Image").getValue().toString()).into(binding.userimage);
+                        }else{
+                            Log.i("UserImage Null","Doctor Appointment");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     private void getAppointmentTime() {
