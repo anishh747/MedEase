@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medease.Adapter.ProductAdapter;
+import com.example.medease.Adapter.ProductCategoryAdapter;
 import com.example.medease.AddProducts;
+import com.example.medease.Model.ProductCategory;
 import com.example.medease.Model.Products;
 import com.example.medease.MyCartActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -94,6 +96,18 @@ public class ShopFragment extends Fragment {
 
 
 
+        List<ProductCategory> productCategoryList = new ArrayList<>();
+        productCategoryList.add(new ProductCategory(1, "Trending"));
+        productCategoryList.add(new ProductCategory(2, "Most Popular"));
+        productCategoryList.add(new ProductCategory(3, "Medicines"));
+        productCategoryList.add(new ProductCategory(4, "Nutrition"));
+        productCategoryList.add(new ProductCategory(5, "Other"));
+
+        setProductRecycler(productCategoryList);
+
+
+
+
         databaseReference.child("Medicines").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -162,6 +176,16 @@ public class ShopFragment extends Fragment {
         prodItemRecycler2.setAdapter(productAdapter);
         productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList3);
         prodItemRecycler3.setAdapter(productAdapter);
+    }
+
+    private void setProductRecycler(List<ProductCategory> productCategoryList){
+
+        RecyclerView productCatRecycler = binding.catRecycler;
+        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
+        productCatRecycler.setLayoutManager(layoutManager);
+        ProductCategoryAdapter productCategoryAdapter = new ProductCategoryAdapter(ShopFragment.this.getActivity(), productCategoryList);
+        productCatRecycler.setAdapter(productCategoryAdapter);
+
     }
 
     @Override

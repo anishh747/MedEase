@@ -8,19 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.medease.Model.Products;
 import com.example.medease.ProductDetails;
 import com.example.medease.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -79,7 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         public SearchViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            prodImage = itemView.findViewById(R.id.prodImageMyCart);
+            prodImage = itemView.findViewById(R.id.prodImageSpecificCategory);
             prodName = itemView.findViewById(R.id.prodNameMyCart);
             prodPrice = itemView.findViewById(R.id.productPriceMyCart);
            // prodQty = itemView.findViewById(R.id.prod_qty);

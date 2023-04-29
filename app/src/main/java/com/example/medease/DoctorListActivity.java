@@ -82,7 +82,8 @@ public class DoctorListActivity extends AppCompatActivity {
                     }
                 }
 
-                doctorListAdapter = new DoctorListAdapter(getApplicationContext(),doctorsList);
+                //doctorListAdapter = new DoctorListAdapter(getApplicationContext(),doctorsList);
+                doctorListAdapter = new DoctorListAdapter(DoctorListActivity.this,doctorsList);
                 doctorListBinding.userlistrecyclerview.setAdapter(doctorListAdapter);
                 doctorListAdapter.notifyDataSetChanged();
             }

@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medease.AddProducts;
+import com.example.medease.ImageSetupActivity;
 import com.example.medease.Model.Doctors;
 import com.example.medease.ProfileUI;
 import com.example.medease.R;
@@ -71,14 +73,20 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         holder.doctorfieldname.setText(doctors.getSpeciality());
         holder.experience.setText(doctors.getExperience());
 
+        holder.doctorlistcardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProfileUI.class);
+//                intent.putExtra("Uid",doctors.getId());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
-        holder.doctorlistcardview.setOnClickListener( v->{
-            Intent intent = new Intent(context, ProfileUI.class);
-            intent.putExtra("Uid",doctors.getId());
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-
+            }
         });
+
+//        holder.doctorlistcardview.setOnClickListener( v->{
+//
+//        });
 
     }
 

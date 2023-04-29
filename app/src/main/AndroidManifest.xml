@@ -17,6 +17,12 @@
         android:theme="@style/Theme.MedEase"
         tools:targetApi="31">
         <activity
+            android:name=".SpecificCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaymentSuccessActivity"
+            android:exported="false" />
+        <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
         <activity

@@ -13,7 +13,7 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/prodImageMyCart"
+            android:id="@+id/prodImageSpecificCategory"
             android:layout_width="97dp"
             android:layout_height="88dp"
             android:layout_gravity="left"
@@ -50,7 +50,7 @@
             android:text="Japanese Cherry Blossom"
             android:textColor="@android:color/background_dark"
             android:textSize="22sp"
-            app:layout_constraintStart_toEndOf="@+id/prodImageMyCart"
+            app:layout_constraintStart_toEndOf="@+id/prodImageSpecificCategory"
             app:layout_constraintTop_toTopOf="parent" />
 
 
