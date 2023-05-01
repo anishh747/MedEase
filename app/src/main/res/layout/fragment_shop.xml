@@ -58,7 +58,7 @@
                 tools:visibility="visible" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/product_recycler1"
+                android:id="@+id/parent_recyclerview"
                 android:layout_width="0dp"
                 android:layout_height="500dp"
                 android:layout_marginTop="128dp"
@@ -66,28 +66,6 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6"
-                tools:listitem="@layout/products_row_item" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/product_recycler2"
-                android:layout_width="411dp"
-                android:layout_height="500dp"
-                android:layout_marginTop="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product_recycler1"
-                tools:listitem="@layout/products_row_item" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/product_recycler3"
-                android:layout_width="411dp"
-                android:layout_height="500dp"
-                android:layout_marginTop="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product_recycler2"
                 tools:listitem="@layout/products_row_item" />
 
             <ImageView
@@ -126,7 +104,7 @@
                 android:id="@+id/cat_recycler"
                 android:layout_width="0dp"
                 android:layout_height="67dp"
-                app:layout_constraintBottom_toTopOf="@+id/product_recycler1"
+                app:layout_constraintBottom_toTopOf="@+id/parent_recyclerview"
                 app:layout_constraintEnd_toEndOf="@+id/searchView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/searchView" />
