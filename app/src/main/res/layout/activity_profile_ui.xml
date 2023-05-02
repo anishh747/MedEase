@@ -203,6 +203,8 @@
                             android:checkableBehavior="single"
                             app:chipSpacingHorizontal="8dp"
                             app:chipSpacingVertical="8dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
                             />
 
                     </androidx.cardview.widget.CardView>

@@ -2,9 +2,11 @@ package com.example.medease;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -143,7 +145,10 @@ public class ProfileUI extends AppCompatActivity {
             chip.setText(name);
             chip.setClickable(true);
             chip.setCheckable(true);
-            chip.setBackground(R.drawable.buttonbackground);
+
+            Drawable background = ContextCompat.getDrawable(getApplicationContext(), R.drawable.buttonbackground);
+            chip.setBackground(background);
+
             chip.setChipBackgroundColorResource(android.R.color.holo_red_light);
 
             chip.setOnClickListener(v -> {
