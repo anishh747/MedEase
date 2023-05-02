@@ -15,8 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medease.Adapter.ParentItemAdapter;
 import com.example.medease.Adapter.ProductAdapter;
+import com.example.medease.Adapter.ProductCategoryAdapter;
 import com.example.medease.AddProducts;
+import com.example.medease.Model.ParentItem;
+import com.example.medease.Model.ProductCategory;
 import com.example.medease.Model.Products;
 import com.example.medease.MyCartActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -36,14 +40,9 @@ public class ShopFragment extends Fragment {
 
     private FragmentShopBinding binding;
 
-    RecyclerView prodItemRecycler1, prodItemRecycler2, prodItemRecycler3, searchRecycler;
-    ProductAdapter productAdapter;
+    RecyclerView parentRecycler, searchRecycler;
 
     SearchView searchView;
-
-    HashMap<String,Object> map1;
-    HashMap<String,Object> map2;
-    HashMap<String,Object> map3;
     List<Products> productsList1 = new ArrayList<>();
     List<Products> productsList2 = new ArrayList<>();
     List<Products> productsList3 = new ArrayList<>();
@@ -59,9 +58,7 @@ public class ShopFragment extends Fragment {
 
         searchView = binding.searchView;
         searchRecycler = binding.searchRecycler;
-        prodItemRecycler1=binding.productRecycler1;
-        prodItemRecycler2=binding.productRecycler2;
-        prodItemRecycler3=binding.productRecycler3;
+        parentRecycler = binding.parentRecyclerview;
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Products");
 
@@ -94,20 +91,30 @@ public class ShopFragment extends Fragment {
 
 
 
+        List<ProductCategory> productCategoryList = new ArrayList<>();
+        productCategoryList.add(new ProductCategory(1, "Trending"));
+        productCategoryList.add(new ProductCategory(2, "Most Popular"));
+        productCategoryList.add(new ProductCategory(3, "Medicines"));
+        productCategoryList.add(new ProductCategory(4, "Nutrition"));
+        productCategoryList.add(new ProductCategory(5, "Other"));
+
+        setProductRecycler(productCategoryList);
+
+
+
+
         databaseReference.child("Medicines").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Products products = dataSnapshot.getValue(Products.class);
                     productsList1.add(products);
-                    //map1 = dataSnapshot.getValue(typeIndicator);
                 }
                 databaseReference.child("Nutrition").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Products products = dataSnapshot.getValue(Products.class);
-                            //map2 = dataSnapshot.getValue(typeIndicator);
                             productsList2.add(products);
 
                         }
@@ -116,13 +123,23 @@ public class ShopFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     Products products = dataSnapshot.getValue(Products.class);
-
-                                    //map3 = dataSnapshot.getValue(typeIndicator);
                                     productsList3.add(products);
 
 
                                 }
-                                setProdItemRecycler();
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(ShopFragment.this.getActivity());
+
+                                // Pass the arguments
+                                // to the parentItemAdapter.
+                                // These arguments are passed
+                                // using a method ParentItemList()
+                                ParentItemAdapter parentItemAdapter = new ParentItemAdapter(ShopFragment.this.getActivity(),ParentItemList());
+
+                                // Set the layout manager
+                                // and adapter for items
+                                // of the parent recyclerview
+                                parentRecycler.setAdapter(parentItemAdapter);
+                                parentRecycler.setLayoutManager(layoutManager);
                             }
 
                             @Override
@@ -148,21 +165,46 @@ public class ShopFragment extends Fragment {
         return root;
     }
 
-    private void setProdItemRecycler() {
-        RecyclerView.LayoutManager layoutManager1= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
-        RecyclerView.LayoutManager layoutManager2= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
-        RecyclerView.LayoutManager layoutManager3= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
+//    private void setProdItemRecycler() {
+//        RecyclerView.LayoutManager layoutManager1= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
+//        RecyclerView.LayoutManager layoutManager2= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
+//        RecyclerView.LayoutManager layoutManager3= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
+//
+//        prodItemRecycler1.setLayoutManager(layoutManager1);
+//        prodItemRecycler2.setLayoutManager(layoutManager2);
+//        prodItemRecycler3.setLayoutManager(layoutManager3);
+//        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList1);
+//        prodItemRecycler1.setAdapter(productAdapter);
+//        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList2);
+//        prodItemRecycler2.setAdapter(productAdapter);
+//        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList3);
+//        prodItemRecycler3.setAdapter(productAdapter);
+//    }
 
-        prodItemRecycler1.setLayoutManager(layoutManager1);
-        prodItemRecycler2.setLayoutManager(layoutManager2);
-        prodItemRecycler3.setLayoutManager(layoutManager3);
-        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList1);
-        prodItemRecycler1.setAdapter(productAdapter);
-        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList2);
-        prodItemRecycler2.setAdapter(productAdapter);
-        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList3);
-        prodItemRecycler3.setAdapter(productAdapter);
+    private List<ParentItem> ParentItemList()
+    {
+        List<ParentItem> itemList = new ArrayList<>();
+
+        ParentItem item1 = new ParentItem("Medicines", productsList1);
+        itemList.add(item1);
+        ParentItem item2 = new ParentItem("Nutrition", productsList2);
+        itemList.add(item2);
+        ParentItem item3 = new ParentItem("Others", productsList3);
+        itemList.add(item3);
+
+        return itemList;
     }
+
+    private void setProductRecycler(List<ProductCategory> productCategoryList){
+
+        RecyclerView productCatRecycler = binding.catRecycler;
+        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
+        productCatRecycler.setLayoutManager(layoutManager);
+        ProductCategoryAdapter productCategoryAdapter = new ProductCategoryAdapter(ShopFragment.this.getActivity(), productCategoryList);
+        productCatRecycler.setAdapter(productCategoryAdapter);
+
+    }
+
 
     @Override
     public void onDestroyView() {

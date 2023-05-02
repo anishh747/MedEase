@@ -1,7 +1,6 @@
 package com.example.medease.Adapter;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medease.Model.Products;
 import com.example.medease.MyCartActivity;
-import com.example.medease.ProductDetails;
 import com.example.medease.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -99,7 +96,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyCartView
         public MyCartViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            prodImage = itemView.findViewById(R.id.prodImageMyCart);
+            prodImage = itemView.findViewById(R.id.prodImageSpecificCategory);
             prodName = itemView.findViewById(R.id.prodNameMyCart);
             prodPrice = itemView.findViewById(R.id.productPriceMyCart);
             deleteBtn = itemView.findViewById(R.id.deleteItemBtn);

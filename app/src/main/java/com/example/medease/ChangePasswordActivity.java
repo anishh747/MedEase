@@ -58,7 +58,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                     firebaseUser.updatePassword(binding.confirmNewPassword.getText().toString());
                                     Toast.makeText(ChangePasswordActivity.this, "Password Changed Successfully", Toast.LENGTH_SHORT).show();
                                     FirebaseAuth.getInstance().signOut();
-                                    startActivity(new Intent(ChangePasswordActivity.this, loginpage.class));
+                                    Intent i = new Intent(ChangePasswordActivity.this, loginpage.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i);
                                     Toast.makeText(ChangePasswordActivity.this, "Please Log In Again To Continue!", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
