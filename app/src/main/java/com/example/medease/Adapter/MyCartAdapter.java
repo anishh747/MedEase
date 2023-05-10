@@ -97,7 +97,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyCartView
             super(itemView);
 
             prodImage = itemView.findViewById(R.id.prodImageMyCart);
-            prodName = itemView.findViewById(R.id.prodNameMyCart);
+            prodName = itemView.findViewById(R.id.itemNameViewOrder);
             prodPrice = itemView.findViewById(R.id.productPriceMyCart);
             deleteBtn = itemView.findViewById(R.id.deleteItemBtn);
             prodQuantity = itemView.findViewById(R.id.quantityMyCart);

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -46,9 +47,9 @@ public class CheckoutActivity extends AppCompatActivity {
         String totalPayment = Integer.toString(Integer.parseInt(totalPrice) + 150);
         binding.totalPayment.setText("Rs "+totalPayment);
 
-        HashMap<Object,Object> map = new HashMap<>();
+        HashMap<String,Object> map = new HashMap<>();
 
-        HashMap<Object,Object> map1 = new HashMap<>();
+        HashMap<String,Object> map1 = new HashMap<>();
 
         binding.medeasepointcardview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,39 +57,37 @@ public class CheckoutActivity extends AppCompatActivity {
                 if(binding.address.getText().toString().isEmpty()){
                     binding.address.setError("Empty Address");
                 }else{
-                    map.put("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    map.put("Address",binding.address.getText().toString());
-                    map.put("TotalCost",totalPayment);
-                    orderRef.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(CheckoutActivity.this,"Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    cartRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 Products products = dataSnapshot.getValue(Products.class);
-                                map1.put("productPrice",products.getProductPrice());
-                                map1.put("productQuantity",products.getProductQuantity());
+                                Log.e("Name of PRODUCT:",products.getProductName());
+                                Log.e("PRICE:",products.getProductPrice());
 
-                                orderRef.child("Products").child(products.getProductName()).setValue(map1).addOnFailureListener(new OnFailureListener() {
+
+                                HashMap<String,Object> data = new HashMap<>();
+                                data.put("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                data.put("Address",binding.address.getText().toString());
+                                data.put("productName",products.getProductName());
+                                data.put("productPrice",products.getProductPrice());
+                                data.put("productQuantity",products.getProductQuantity());
+                                FirebaseDatabase.getInstance().getReference().child("MyPastOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(products.getProductName()).setValue(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(CheckoutActivity.this,"Error in Products:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                    public void onSuccess(Void unused) {
+                                        Log.i("MY pastOrder","MY pastOrder");
                                     }
                                 });
+
+
+
+
                             }
 
-                            cartRef.removeValue();
+                            //cartRef.removeValue();
                             Toast.makeText(CheckoutActivity.this, "Order Placed Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(CheckoutActivity.this,PaymentSuccessActivity.class));
 
                         }
 
@@ -97,10 +96,6 @@ public class CheckoutActivity extends AppCompatActivity {
 
                         }
                     });
-
-
-
-
                 }
 
             }

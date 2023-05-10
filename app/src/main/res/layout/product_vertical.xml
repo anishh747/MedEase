@@ -33,7 +33,7 @@
             app:layout_constraintVertical_bias="0.571" />
 
         <TextView
-            android:id="@+id/prodNameMyCart"
+            android:id="@+id/itemNameViewOrder"
             android:layout_width="196dp"
             android:layout_height="42dp"
 

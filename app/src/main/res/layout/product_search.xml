@@ -34,14 +34,14 @@
             android:textColor="#42995C"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/prodNameMyCart"
+            app:layout_constraintEnd_toEndOf="@+id/itemNameViewOrder"
             app:layout_constraintHorizontal_bias="0.183"
-            app:layout_constraintStart_toStartOf="@+id/prodNameMyCart"
-            app:layout_constraintTop_toBottomOf="@+id/prodNameMyCart"
+            app:layout_constraintStart_toStartOf="@+id/itemNameViewOrder"
+            app:layout_constraintTop_toBottomOf="@+id/itemNameViewOrder"
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/prodNameMyCart"
+            android:id="@+id/itemNameViewOrder"
             android:layout_width="183dp"
             android:layout_height="57dp"
 

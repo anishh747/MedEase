@@ -77,7 +77,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProfileUI.class);
-//                intent.putExtra("Uid",doctors.getId());
+                intent.putExtra("Uid",doctors.getId());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 

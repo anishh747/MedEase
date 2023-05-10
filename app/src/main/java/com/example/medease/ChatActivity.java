@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,24 +50,38 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView.Adapter adapter;
     String image;
     URL serverUrl;
-    String videoRoomCode = "abxyz";
+    String videoRoomCode = FirebaseAuth.getInstance().getUid();
+
+    int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         userimage = findViewById(R.id.chatuserimage);
         usernametextview = findViewById(R.id.chatusername);
         chatrecyclerview = findViewById(R.id.chatrecyclerview);
         chatmessage = findViewById(R.id.chatedittext);
         chatsendimage = findViewById(R.id.chatsendimageview);
 
+
+        findViewById(R.id.callBoxLayout).setVisibility(View.GONE);
+
+        // Get the current LayoutParams of the RecyclerView
+        ViewGroup.LayoutParams layoutParams = chatrecyclerview.getLayoutParams();
+        height = layoutParams.height;
+        // Set the height of the LayoutParams to MATCH_PARENT
+        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        // Set the LayoutParams back to the RecyclerView
+        chatrecyclerview.setLayoutParams(layoutParams);
+
         userid= getIntent().getStringExtra("userid");
         usertype =getIntent().getStringExtra("usertype");
         Log.i("usertype",usertype);
         Log.i("Userid",userid);
 
+        checkCall();
 
 
         try {
@@ -75,7 +92,15 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         findViewById(R.id.videoCallBtn).setOnClickListener(view -> {
-            startVideoCall();
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("Caller",FirebaseAuth.getInstance().getUid());
+            map.put("To",userid);
+            FirebaseDatabase.getInstance().getReference("VideoCall").child(userid).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    //startVideoCall();
+                }
+            });
         });
 
         FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(userid).addValueEventListener(new ValueEventListener() {
@@ -145,6 +170,37 @@ public class ChatActivity extends AppCompatActivity {
                 chatAdapter.notifyDataSetChanged();
             }
 
+        });
+    }
+
+    private void checkCall() {
+        FirebaseDatabase.getInstance().getReference().child("VideoCall").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(FirebaseAuth.getInstance().getUid())){
+                    String joinRoomCode = snapshot.child(FirebaseAuth.getInstance().getUid()).child("Caller").getValue(String.class);
+                    ViewGroup.LayoutParams layoutParams =  chatrecyclerview.getLayoutParams();
+                    layoutParams.height = height;
+                    chatrecyclerview.setLayoutParams(layoutParams);
+                    findViewById(R.id.callBoxLayout).setVisibility(View.VISIBLE);
+                    findViewById(R.id.joinNowBtn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            JitsiMeetConferenceOptions meetConferenceOptions = new JitsiMeetConferenceOptions.Builder()
+                                    .setRoom(joinRoomCode)
+                                    .setFeatureFlag("welcomepage.enabled", false)
+                                    .build();
+                            JitsiMeetActivity.launch(ChatActivity.this,meetConferenceOptions);
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
     }
 

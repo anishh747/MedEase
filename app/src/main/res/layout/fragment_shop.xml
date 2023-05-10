@@ -48,10 +48,9 @@
                 android:id="@+id/addProducts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
                 android:text="Add"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
-                app:layout_constraintEnd_toStartOf="@+id/myCartBtn"
-                app:layout_constraintHorizontal_bias="0.609"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
                 app:layout_constraintTop_toTopOf="@+id/textView5"
                 app:layout_constraintVertical_bias="1.0"
@@ -67,18 +66,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6"
                 tools:listitem="@layout/products_row_item" />
-
-            <ImageView
-                android:id="@+id/myCartBtn"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="3dp"
-                app:layout_constraintBottom_toBottomOf="@+id/addProducts"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/addProducts"
-                app:layout_constraintVertical_bias="0.0"
-                tools:src="@drawable/baseline_shopping_cart_24" />
 
             <SearchView
                 android:id="@+id/searchView"
@@ -98,7 +85,7 @@
                 app:layout_constraintStart_toStartOf="@+id/searchView"
                 app:layout_constraintTop_toBottomOf="@+id/searchView"
                 tools:listitem="@layout/product_search"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cat_recycler"
@@ -108,6 +95,17 @@
                 app:layout_constraintEnd_toEndOf="@+id/searchView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/searchView" />
+
+            <ImageView
+                android:id="@+id/myCartBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/baseline_shopping_cart_24"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
