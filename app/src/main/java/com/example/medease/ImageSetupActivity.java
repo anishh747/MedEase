@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,8 +13,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.medease.Model.Doctors;
+import com.example.medease.Model.NormalUsers;
+import com.example.medease.databinding.ActivityImageSetupBinding;
+import com.example.medease.databinding.ActivityLoginpageBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -26,10 +35,18 @@ public class ImageSetupActivity extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
 
+    private ActivityImageSetupBinding binding;
+
+    String Usertype;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_setup);
+        //setContentView(R.layout.activity_image_setup);
+
+        binding = ActivityImageSetupBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         setupimage= findViewById(R.id.setupimage);
 
@@ -92,5 +109,80 @@ public class ImageSetupActivity extends AppCompatActivity {
                 activityResultLauncher.launch(gallery);
             }
         });
+
+        // Getting the User Type --> Doctor or Normal User
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        usersRef.child("Users").child("Doctor").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    Usertype = "Doctor";
+                    getInfo(Usertype);
+
+                } else {
+                    // The current user is not a doctor, so check if they are a normal user
+                    usersRef.child("Users").child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+
+                                Usertype = "NormalUser";
+                                getInfo(Usertype);
+
+                            } else {
+                                // The current user is neither a doctor nor a normal user
+                                // Do whatever you need to do here
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Handle any errors here
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors here
+            }
+        });
+
+
     }
+
+    private void getInfo(String usertype) {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(usertype).child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            if(usertype.equals("Doctor")){
+
+                                Doctors doctor = dataSnapshot.getValue(Doctors.class);
+                                binding.name.setText(doctor.getUsername());
+                                binding.gender.setText(doctor.getGender());
+                                binding.number.setText(doctor.getMobileNo());
+
+                            } else if (usertype.equals("NormalUser")) {
+                                NormalUsers user = dataSnapshot.getValue(NormalUsers.class);
+                                binding.name.setText(user.getUsername());
+                                binding.gender.setText(user.getGender());
+                                binding.number.setText(user.getMobileNo());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
 }

@@ -156,7 +156,7 @@
                         android:layout_marginTop="15dp">
 
                         <TextView
-                            android:id="@+id/appointment"
+                            android:id="@+id/appointmentModel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

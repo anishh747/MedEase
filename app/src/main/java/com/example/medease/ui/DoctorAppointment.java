@@ -2,11 +2,14 @@ package com.example.medease.ui;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import static kotlin.reflect.jvm.internal.impl.builtins.StandardNames.FqNames.set;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import com.example.medease.Model.Doctors;
+import com.example.medease.MyAppointment;
 import com.example.medease.R;
 import com.example.medease.databinding.ActivityDoctorAppointmentBinding;
 import com.example.medease.databinding.ActivityDoctorRegisterBinding;
@@ -43,7 +47,7 @@ public class DoctorAppointment extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_doctor_appointment);
+      // setContentView(R.layout.activity_doctor_appointment);
 
         binding = ActivityDoctorAppointmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -92,7 +96,7 @@ public class DoctorAppointment extends AppCompatActivity{
             }else {
                 Log.i("time",binding.inTime.getText().toString());
 
-                FirebaseDatabase.getInstance().getReference().child("Appointment").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(binding.inDate.getText().toString())
+                FirebaseDatabase.getInstance().getReference().child("AppointmentModel").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(binding.inDate.getText().toString())
                         .child(binding.inTime.getText().toString()).setValue("null");
             }
 
@@ -114,6 +118,13 @@ public class DoctorAppointment extends AppCompatActivity{
 
         getAppointmentTime();
 
+        binding.buttonswitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DoctorAppointment.this, MyAppointment.class));
+            }
+        });
+
     }
 
     private void getUserData() {
@@ -128,7 +139,7 @@ public class DoctorAppointment extends AppCompatActivity{
                         if(snapshot.child("Image").getValue() != null){
                             Picasso.get().load(snapshot.child("Image").getValue().toString()).into(binding.userimage);
                         }else{
-                            Log.i("UserImage Null","Doctor Appointment");
+                            Log.i("UserImage Null","Doctor AppointmentModel");
                         }
                     }
 
@@ -145,7 +156,7 @@ public class DoctorAppointment extends AppCompatActivity{
         String date = binding.calendertextview.getText().toString();
         Log.i("Date",date);
 
-        FirebaseDatabase.getInstance().getReference().child("Appointment").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        FirebaseDatabase.getInstance().getReference().child("AppointmentModel").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(binding.calendertextview.getText().toString()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -176,24 +187,21 @@ public class DoctorAppointment extends AppCompatActivity{
             chip.setCheckable(true);
             chip.setChipBackgroundColorResource(android.R.color.holo_purple);
 
-            chip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Chip selectedChip = (Chip) v;
-                    if (selectedChip == mSelectedChip) {
-                        // The same chip was selected, unselect it
+            chip.setOnClickListener(v -> {
+                Chip selectedChip = (Chip) v;
+                if (selectedChip == mSelectedChip) {
+                    // The same chip was selected, unselect it
+                    mSelectedChip.setChecked(false);
+                    mSelectedChip.setChipBackgroundColorResource(android.R.color.holo_red_light);
+                    mSelectedChip = null;
+                } else {
+                    // A new chip was selected, unselect the previous one and select the new one
+                    if (mSelectedChip != null) {
                         mSelectedChip.setChecked(false);
                         mSelectedChip.setChipBackgroundColorResource(android.R.color.holo_red_light);
-                        mSelectedChip = null;
-                    } else {
-                        // A new chip was selected, unselect the previous one and select the new one
-                        if (mSelectedChip != null) {
-                            mSelectedChip.setChecked(false);
-                            mSelectedChip.setChipBackgroundColorResource(android.R.color.holo_red_light);
-                        }
-                        mSelectedChip = selectedChip;
-                        mSelectedChip.setChipBackgroundColorResource(R.color.lavender);
                     }
+                    mSelectedChip = selectedChip;
+                    mSelectedChip.setChipBackgroundColorResource(R.color.lavender);
                 }
             });
 

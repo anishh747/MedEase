@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medease.ChatActivity;
-import com.example.medease.DoctorRegisterActivity;
 import com.example.medease.Model.Doctors;
 import com.example.medease.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +35,7 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
         this.context = context;
         this.chatUserList = chatUserList;
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

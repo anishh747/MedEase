@@ -12,14 +12,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.medease.Adapter.TopUsersAdapter;
 import com.example.medease.DoctorListActivity;
 import com.example.medease.Fitness;
 import com.example.medease.Model.Doctors;
 import com.example.medease.Model.NormalUsers;
 
+import com.example.medease.MyAppointment;
 import com.example.medease.databinding.FragmentHomeBinding;
-import com.example.medease.loginpage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +29,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,21 +44,34 @@ public class HomeFragment extends Fragment {
 
     TextView username ;
     CircleImageView userimage;
+    TopUsersAdapter adapter;
+    List<Doctors> topUsers;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
 
-        getUserType();
 
         homepagBindinge = FragmentHomeBinding.inflate(inflater, container, false);
         View root = homepagBindinge.getRoot();
 
-//        homepagBindinge.logout.setOnClickListener(v-> {
-//            FirebaseAuth.getInstance().signOut();
-//            Intent intent = new Intent(HomeFragment.this.getActivity(), loginpage.class);
-//            startActivity(intent);
-//        });
+        getUserType();
+        getTopDoctor();
+
+
+        topUsers = new ArrayList<>();
+
+
+
+
+        adapter= new TopUsersAdapter(getActivity(),(ArrayList<Doctors>)topUsers);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeFragment.this.getActivity());
+        homepagBindinge.topdoctorsrecyclerview.setLayoutManager(linearLayoutManager);
+        homepagBindinge.topdoctorsrecyclerview.setAdapter(adapter);
+
+
 
         homepagBindinge.cardiologycardview.setOnClickListener(v -> {
             Intent intent = new Intent(HomeFragment.this.getActivity(), DoctorListActivity.class);
@@ -79,12 +100,69 @@ public class HomeFragment extends Fragment {
         });
 
         homepagBindinge.appointmentcardview.setOnClickListener(v->{
-            Intent intent = new Intent(HomeFragment.this.getActivity(), Fitness.class);
+            Intent intent = new Intent(HomeFragment.this.getActivity(), MyAppointment.class);
             startActivity(intent);
         });
 
+
+
+
+
         return root;
     }
+
+    private void getTopDoctor() {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Like");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Map<String, Integer> likeCountMap = new HashMap<>();
+                for (DataSnapshot userIdSnapshot : snapshot.getChildren()) {
+                    int likeCount = 0;
+                    for (DataSnapshot userSnapshot : userIdSnapshot.getChildren()) {
+                        if (userSnapshot.getValue().equals(true)) {
+                            likeCount++;
+                        }
+                    }
+                    likeCountMap.put(userIdSnapshot.getKey(), likeCount);
+                }
+                List<Map.Entry<String, Integer>> sortedLikesList = new ArrayList<>(likeCountMap.entrySet());
+                Collections.sort(sortedLikesList, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+
+                for (int i = 0; i < Math.min(sortedLikesList.size(), 5); i++) {
+                    Log.i("List",sortedLikesList.get(i).getKey());
+
+
+                    FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(sortedLikesList.get(i).getKey()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            topUsers.clear();
+                            Doctors doctors= snapshot.getValue(Doctors.class);
+                            Log.i(doctors.getUsername(),"Users");
+                            topUsers.add(doctors);
+                            adapter.notifyDataSetChanged();
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+                    });
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
+
 
     private void getUserType() {
 
@@ -163,4 +241,6 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         homepagBindinge = null;
     }
+
+
 }

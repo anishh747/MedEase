@@ -1,7 +1,6 @@
 package com.example.medease.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,30 +12,30 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.medease.DoctorListActivity;
 import com.example.medease.Model.Doctors;
-import com.example.medease.ProfileUI;
 import com.example.medease.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.ViewHolder> {
+public class TopUsersAdapter extends RecyclerView.Adapter<TopUsersAdapter.ViewHolder> {
 
-    List<Doctors> doctorsList;
     Context context;
+    List<Doctors> topUsers;
     public FirebaseUser firebaseUser;
 
-    public DoctorListAdapter(Context context, List<Doctors> doctorsList) {
+    public TopUsersAdapter(Context context , List<Doctors> topUsers) {
         this.context = context;
-        this.doctorsList = doctorsList;
+        this.topUsers= topUsers;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,10 +48,6 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         private CardView doctorlistcardview;
         private ImageView like;
         private TextView nooflikes;
-
-
-
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,13 +65,12 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
 
             like.setVisibility(View.VISIBLE);
             nooflikes.setVisibility(View.VISIBLE);
-
         }
     }
 
     @NonNull
     @Override
-    public DoctorListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TopUsersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.chatindividualuseractivity, parent, false);
 
@@ -84,30 +78,34 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DoctorListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TopUsersAdapter.ViewHolder holder, int position) {
 
-        Doctors doctors = doctorsList.get(position);
+        Doctors doctors= topUsers.get(position);
+        Log.i("TopUserAdapter",doctors.getUsername());
         holder.username.setText(doctors.getUsername());
         holder.doctorfieldname.setText(doctors.getSpeciality());
         holder.experience.setText(doctors.getExperience());
-
-        checkLike(holder.like,doctors.getId());
-        nooflike(holder.nooflikes,doctors.getId());
-
-        holder.doctorlistcardview.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(doctors.getId()).child("Image");
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ProfileUI.class);
-                intent.putExtra("Uid",doctors.getId());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String imageUrl = dataSnapshot.getValue(String.class);
+                if(imageUrl != null){
+                    Picasso.get().load(imageUrl).into(holder.userimage);
 
+                }else{
+                    Log.i("Image Url Empty","Top UserAdapter");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // handle error
             }
         });
 
-//        holder.doctorlistcardview.setOnClickListener( v->{
-//
-//        });
+        checkLike(holder.like,doctors.getId());
+        nooflike(holder.nooflikes,doctors.getId());
 
         holder.like.setOnClickListener(v->{
             if( holder.like.getTag().equals("like")){
@@ -124,11 +122,14 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             }
         });
 
+
+
     }
 
     @Override
     public int getItemCount() {
-        return doctorsList.size();
+        Log.i("Size topUSers", String.valueOf(topUsers.size()));
+        return topUsers.size();
     }
 
     private void nooflike(TextView nooflikes, String id) {

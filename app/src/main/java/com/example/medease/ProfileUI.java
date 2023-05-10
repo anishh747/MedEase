@@ -116,7 +116,7 @@ public class ProfileUI extends AppCompatActivity {
         String date = binding.date.getText().toString();
         Log.i("Date",date);
 
-        FirebaseDatabase.getInstance().getReference().child("Appointment").child(doctorid)
+        FirebaseDatabase.getInstance().getReference().child("AppointmentModel").child(doctorid)
                 .child(binding.date.getText().toString()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -178,7 +178,7 @@ public class ProfileUI extends AppCompatActivity {
             if (mSelectedChip != null) {
                 String selectedChipText = mSelectedChip.getText().toString();
                 Log.i("Selected chip text:" , selectedChipText.toString());
-                Log.i("Date Appointment:" , binding.date.getText().toString());
+                Log.i("Date AppointmentModel:" , binding.date.getText().toString());
 
 
 

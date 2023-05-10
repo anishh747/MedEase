@@ -19,6 +19,8 @@ import com.example.medease.Model.Doctors;
 import com.example.medease.Model.NormalUsers;
 import com.example.medease.databinding.ActivityBookAppointmentBinding;
 import com.example.medease.databinding.ActivityDoctorAppointmentBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BookAppointment extends AppCompatActivity {
 
@@ -73,6 +76,26 @@ public class BookAppointment extends AppCompatActivity {
 
             reference.child("Doctor_Uid").setValue(doctorid);
             reference.child("Patient_Uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("doctorId", doctorid);
+            map.put("patientId",FirebaseAuth.getInstance().getCurrentUser().getUid());
+            map.put("appointmentDate",appointmentDate);
+            map.put("appointmentTime",selectedChipText);
+
+            FirebaseDatabase.getInstance().getReference().child("MyAppointment").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.i("BookAppointment","My appointmentModel type");
+                }
+            });
+
+            FirebaseDatabase.getInstance().getReference().child("MyAppointment").child(doctorid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.i("BookAppointment","My appointmentModel type");
+                }
+            });
 
             if (ContextCompat.checkSelfPermission(BookAppointment.this, Manifest.permission.SEND_SMS)== PackageManager.PERMISSION_GRANTED){
                 sendMessage();

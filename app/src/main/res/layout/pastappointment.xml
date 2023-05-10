@@ -2,10 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    >
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/doctorlistcardview"
@@ -16,7 +14,6 @@
 
 
         <LinearLayout
-
             android:id="@+id/cardviewrow"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -75,26 +72,29 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/nooflike"
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
-                    android:text="no"
+                    android:text="Time"
                     android:textSize="20dp"
                     android:textColor="#F80707"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/like"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/ic_favourite"
-                    android:visibility="gone"
                     />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:text="Date"
+                    android:textSize="20dp"
+                    android:textColor="#F80707"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"/>
+
+
 
             </LinearLayout>
 
@@ -136,6 +136,7 @@
 
 
     </LinearLayout>
+
 
 
 </LinearLayout>

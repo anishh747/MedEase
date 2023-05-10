@@ -46,7 +46,7 @@ public class MyCartActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.myCartRecycler);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-        
+
         databaseReference.child("MyCart").child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

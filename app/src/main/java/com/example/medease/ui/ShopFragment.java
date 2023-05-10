@@ -1,7 +1,12 @@
 package com.example.medease.ui;
 
+import static org.webrtc.ContextUtils.getApplicationContext;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +20,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medease.Adapter.DoctorListAdapter;
 import com.example.medease.Adapter.ParentItemAdapter;
 import com.example.medease.Adapter.ProductAdapter;
 import com.example.medease.Adapter.ProductCategoryAdapter;
+import com.example.medease.Adapter.SearchAdapter;
 import com.example.medease.AddProducts;
+import com.example.medease.Model.Doctors;
 import com.example.medease.Model.ParentItem;
 import com.example.medease.Model.ProductCategory;
 import com.example.medease.Model.Products;
@@ -28,6 +36,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.example.medease.databinding.FragmentShopBinding;
 import java.util.ArrayList;
@@ -40,12 +49,13 @@ public class ShopFragment extends Fragment {
 
     private FragmentShopBinding binding;
 
-    RecyclerView parentRecycler, searchRecycler;
+    List<Products> productsList;
 
-    SearchView searchView;
     List<Products> productsList1 = new ArrayList<>();
     List<Products> productsList2 = new ArrayList<>();
     List<Products> productsList3 = new ArrayList<>();
+
+    SearchAdapter searchAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,12 +63,16 @@ public class ShopFragment extends Fragment {
 
         binding = FragmentShopBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        productsList = new ArrayList<>();
+        searchAdapter = new SearchAdapter(getContext(),productsList);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ShopFragment.this.getActivity());
+        binding.searchRecycler.setLayoutManager(linearLayoutManager);
+        binding.searchRecycler.setAdapter(searchAdapter);
         GenericTypeIndicator<HashMap<String, Object>> typeIndicator = new GenericTypeIndicator<HashMap<String, Object>>() {};
 
 
-        searchView = binding.searchView;
-        searchRecycler = binding.searchRecycler;
-        parentRecycler = binding.parentRecyclerview;
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Products");
 
@@ -73,19 +87,6 @@ public class ShopFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ShopFragment.this.getActivity(), MyCartActivity.class));
-            }
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String s) {
-
-                return false;
             }
         });
 
@@ -138,8 +139,8 @@ public class ShopFragment extends Fragment {
                                 // Set the layout manager
                                 // and adapter for items
                                 // of the parent recyclerview
-                                parentRecycler.setAdapter(parentItemAdapter);
-                                parentRecycler.setLayoutManager(layoutManager);
+                                binding.parentRecyclerview.setAdapter(parentItemAdapter);
+                                binding.parentRecyclerview.setLayoutManager(layoutManager);
                             }
 
                             @Override
@@ -162,24 +163,34 @@ public class ShopFragment extends Fragment {
 
             }
         });
+
+
+//        readUser();
+        binding.searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(charSequence.length()!=0){
+                    searchUser(charSequence.toString());
+                    Log.i("textt changed","searchtext");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         return root;
     }
 
-//    private void setProdItemRecycler() {
-//        RecyclerView.LayoutManager layoutManager1= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
-//        RecyclerView.LayoutManager layoutManager2= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
-//        RecyclerView.LayoutManager layoutManager3= new LinearLayoutManager(ShopFragment.this.getActivity(), RecyclerView.HORIZONTAL, false);
-//
-//        prodItemRecycler1.setLayoutManager(layoutManager1);
-//        prodItemRecycler2.setLayoutManager(layoutManager2);
-//        prodItemRecycler3.setLayoutManager(layoutManager3);
-//        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList1);
-//        prodItemRecycler1.setAdapter(productAdapter);
-//        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList2);
-//        prodItemRecycler2.setAdapter(productAdapter);
-//        productAdapter = new ProductAdapter(ShopFragment.this.getActivity(), productsList3);
-//        prodItemRecycler3.setAdapter(productAdapter);
-//    }
 
     private List<ParentItem> ParentItemList()
     {
@@ -206,9 +217,88 @@ public class ShopFragment extends Fragment {
     }
 
 
+
+
+
+
+    private void searchUser(String s) {
+        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        productRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot productSnapshot : dataSnapshot.getChildren()) {
+
+                    Query databasequery = productRef.child(productSnapshot.getKey()).orderByChild("productName").startAt(s).endAt(s +"\uf8ff");
+                    databasequery.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            productsList.clear();
+                            for(DataSnapshot shot : snapshot.getChildren()){
+                                Products products= shot.getValue(Products.class);
+                                productsList.add(products);
+                                Log.i("search found","search found");
+                                Log.i("Product Search",products.getProductName());
+                            }
+                            searchAdapter.notifyDataSetChanged();
+                            searchAdapter.updateData(productsList);
+//                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ShopFragment.this.getActivity());
+//                            binding.searchRecycler.setLayoutManager(linearLayoutManager);
+//                            binding.searchRecycler.setAdapter(searchAdapter);
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+                    });
+                    searchAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // handle error
+            }
+        });
+
+
+    }
+
+//
+//    private void readUser() {
+//
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child("Doctor");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(TextUtils.isEmpty(binding.searchView.getText().toString())){
+//                    doctorsList.clear();
+//                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                        Doctors doctors = dataSnapshot.getValue(Doctors.class);
+//                        doctorsList.add(doctors);
+//                    }
+//                    doctorListAdapter = new DoctorListAdapter(ShopFragment.this,doctorsList);
+//                    binding.userlistrecyclerview.setAdapter(doctorListAdapter);
+//                    doctorListAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//    }
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
 }

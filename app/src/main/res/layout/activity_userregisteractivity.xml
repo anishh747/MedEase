@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/register_bk_color"
+    android:background="#F3BDCF"
     android:focusableInTouchMode="true"
     android:gravity="center"
     tools:context=".userregisteractivity">
@@ -21,42 +21,27 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                android:layout_width="385dp"
+                android:layout_height="226dp"
+                android:layout_alignParentTop="true"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/registemlottie" />
 
-            <RelativeLayout
-                android:layout_width="355dp"
-                android:layout_height="230dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Welcome to\n \t\t\t\t our\n Register Page !"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="211dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="-19dp"
-                    android:layout_marginEnd="-41dp"
-                    android:layout_marginBottom="50dp"
-                    android:src="@drawable/register" />
-            </RelativeLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="#FFF"
-                app:cardCornerRadius="10dp">
+                app:cardCornerRadius="10dp"
+                android:elevation="100dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:layout_margin="12dp"
                     android:orientation="vertical">
 
@@ -73,7 +58,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:textSize="18sp"
-                        android:background="@drawable/custom_edittext"
+                        android:background="@drawable/buttonbackground"
                         />
 
                     <EditText
@@ -83,7 +68,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="13dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/custom_edittext"
+                        android:background="@drawable/buttonbackground"
                         android:drawableLeft="@drawable/baseline_email_24"
                         android:drawablePadding="8dp"
                         android:hint=" E-mail"
@@ -107,7 +92,7 @@
                         android:textColor="@color/black"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/custom_edittext"
+                        android:background="@drawable/buttonbackground"
                         />
 
                     <EditText
@@ -117,7 +102,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="13dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/custom_edittext"
+                        android:background="@drawable/buttonbackground"
                         android:drawableLeft="@drawable/baseline_dialpad_24"
                         android:drawablePadding="8dp"
                         android:hint=" Mobile Number"
@@ -141,7 +126,8 @@
                         android:id="@+id/radio_group_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        >
 
                         <RadioButton
                             android:id="@+id/radio_female"
@@ -150,7 +136,8 @@
                             android:layout_marginLeft="5dp"
                             android:text="Female"
                             android:textColor="#555555"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            />
 
                         <RadioButton
                             android:id="@+id/radio_male"
@@ -176,18 +163,18 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/custom_edittext" />
+                        android:background="@drawable/buttonbackground"/>
 
 
                     <Button
                         android:id="@+id/registeruserbutton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="175dp"
                         android:layout_height="48sp"
-                        android:text="Register"
-                        android:textSize="16sp"
-                        android:backgroundTint="#E91E63"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
+                        android:backgroundTint="#E91E63"
+                        android:text="Register"
+                        android:textSize="16sp"
                         app:cornerRadius="20dp" />
 
                 </LinearLayout>

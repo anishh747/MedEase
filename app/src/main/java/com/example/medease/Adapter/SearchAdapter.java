@@ -2,6 +2,7 @@ package com.example.medease.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +40,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SearchViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
-        holder.prodName.setText(productsList.get(position).getProductName());
-        holder.prodPrice.setText(productsList.get(position).getProductPrice());
+    public void onBindViewHolder(@NonNull final SearchViewHolder holder, int position) {
+
+        Log.i("SearchAdapter class","SearchAdapter class");
+        Products products = productsList.get(position);
+        Log.i("Product List",products.getProductName());
+        Picasso.get().load(products.getImageUrl()).into(holder.prodImage);
+        holder.prodName.setText(products.getProductName());
+        holder.prodPrice.setText(products.getProductPrice());
 
         holder.prodImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +65,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public int getItemCount() {
+
+        Log.i("Search Adapter", String.valueOf(productsList.size()));
         return productsList.size();
     }
 
@@ -80,6 +87,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
 
         }
+    }
+
+    public void updateData(List<Products> productsList) {
+        this.productsList = productsList;
+        notifyDataSetChanged();
     }
 
 }
