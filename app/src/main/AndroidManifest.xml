@@ -23,6 +23,12 @@
             android:name=".PaymentSuccessActivity"
             android:exported="false" />
         <activity
+            android:name=".onboardscreen"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
+            android:exported="false" />
+        <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
         <activity

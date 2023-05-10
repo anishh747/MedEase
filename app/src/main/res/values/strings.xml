@@ -20,4 +20,18 @@
     <string name="menu_shop">Shop</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_find_a_doctor">Find A Doctor</string>
+
+    //Headings
+    <string name="heading_one">Quick &amp; Easy Payments</string>
+    <string name="heading_two">Instant Notifications</string>
+    <string name="heading_three"> Consult Your Doctor</string>
+    <string name="heading_fourth"> E-commerce </string>
+
+
+    //Description
+    <string name="desc_one">Grow your Business By Accepting Card Payments with The New Card Reader</string>
+    <string name="desc_two">Be the first to know with instant notifications on your phone and Stay connected from your favorite apps and services.</string>
+    <string name="desc_three">Get professional guidance through virtual consultations with your doctor.</string>
+    <string name="desc_fourth">Get access to a comprehensive selection of medical supplies and healthcare products through our online marketplace</string>
+
 </resources>
