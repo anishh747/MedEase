@@ -166,27 +166,6 @@ public class ShopFragment extends Fragment {
 
 
 //        readUser();
-        binding.searchView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                if(charSequence.length()!=0){
-                    searchUser(charSequence.toString());
-                    Log.i("textt changed","searchtext");
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
         return root;
     }

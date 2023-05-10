@@ -11,12 +11,14 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+
 import com.example.medease.databinding.ActivityLoginpageBinding;
 import com.example.medease.ui.DoctorAppointment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class loginpage extends AppCompatActivity {
+    DatabaseReference usersRef;
+
+//    String uid;
 
     private ActivityLoginpageBinding loginpageBinding;
     private FirebaseAuth mAuth;
@@ -34,10 +39,11 @@ public class loginpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // this is not required if we use View Binding
 //        setContentView(R.layout.activity_loginpage);
-
         loginpageBinding = ActivityLoginpageBinding.inflate(getLayoutInflater());
         View view = loginpageBinding.getRoot();
         setContentView(view);
+        usersRef = FirebaseDatabase.getInstance().getReference();
+//        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -71,20 +77,18 @@ public class loginpage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
 
-                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference();
-                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                            usersRef.child("Users").child("Doctor").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                            usersRef.child("Users").child("Doctor").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
 
                                         Toast.makeText(loginpage.this, "Login Sucessful", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(loginpage.this, DoctorAppointment.class));
+                                        startActivity(new Intent(loginpage.this, DoctorMainActivity.class));
 
                                     } else {
                                         // The current user is not a doctor, so check if they are a normal user
-                                        usersRef.child("Users").child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        usersRef.child("Users").child("NormalUsers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 if (dataSnapshot.exists()) {
@@ -125,8 +129,25 @@ public class loginpage extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser() != null){
-            startActivity(new Intent(loginpage.this,MainActivity.class));
-            finish();
+            usersRef.child("Users").child("Doctor").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        startActivity(new Intent(loginpage.this, DoctorMainActivity.class));
+                        finish();
+
+                    } else {
+                        startActivity(new Intent(loginpage.this,MainActivity.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle any errors here
+                }
+            });
+
         }
     }
 }

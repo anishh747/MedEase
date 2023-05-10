@@ -21,6 +21,7 @@ import com.example.medease.Model.Doctors;
 import com.example.medease.Model.NormalUsers;
 
 import com.example.medease.MyAppointment;
+import com.example.medease.ShopMainActivity;
 import com.example.medease.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -93,9 +94,9 @@ public class HomeFragment extends Fragment {
             intent.putExtra("Cardview","Opthalmology");
             startActivity(intent);
         });
-        homepagBindinge.gynecologycardview.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeFragment.this.getActivity(), DoctorListActivity.class);
-            intent.putExtra("Cardview","Gynecology");
+        homepagBindinge.shopCardView.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeFragment.this.getActivity(), ShopMainActivity.class);
+            //intent.putExtra("Cardview","Gynecology");
             startActivity(intent);
         });
 

@@ -70,7 +70,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
             }
         });
 
-        binding.button3.setOnClickListener(new View.OnClickListener() {
+        binding.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());

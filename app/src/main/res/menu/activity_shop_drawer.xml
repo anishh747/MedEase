@@ -6,26 +6,20 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:id="@+id/nav_shop"
+            android:icon="@drawable/ic_home"
             android:title="@string/menu_home"
             app:cnb_iconColor="@color/purple_200"/>
         <item
-            android:id="@+id/nav_findADoctor"
-            android:icon="@drawable/search_icon"
-            android:title="Find A Doctor"
-            app:cnb_iconColor="@color/purple_200"/>
-        <item
-            android:id="@+id/nav_myAppointment"
+            android:id="@+id/nav_myCart"
             android:icon="@drawable/baseline_shopping_cart_24"
-            android:title="My Appointments"
+            android:title="MyCart"
             app:cnb_iconColor="@color/purple_200"/>
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Settings"
+            android:id="@+id/nav_viewOrders"
+            android:icon="@drawable/shopping_bag"
+            android:title="ViewOrders"
             app:cnb_iconColor="@color/purple_200"/>
-
 
     </group>
 </menu>

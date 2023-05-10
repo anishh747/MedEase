@@ -3,37 +3,41 @@ package com.example.medease;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
+import com.example.medease.databinding.ActivityChangePasswordBinding;
+import com.example.medease.databinding.ActivityDoctorMainBinding;
+import com.example.medease.ui.DoctorHomeFragment;
 import com.example.medease.ui.FindADoctorFragment;
 import com.example.medease.ui.HomeFragment;
 import com.example.medease.ui.MyAppointmentFragment;
-import com.example.medease.ui.ShopFragment;
 import com.example.medease.ui.SettingsFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.medease.ui.ShopFragment;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
-public class MainActivity extends AppCompatActivity {
+public class DoctorMainActivity extends AppCompatActivity {
 
+    ActivityDoctorMainBinding binding;
     ChipNavigationBar chipNavigationBar;
     private Fragment fragmentInstance;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityDoctorMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        chipNavigationBar = (ChipNavigationBar) findViewById(R.id.bottom_navigation);
+        chipNavigationBar = (ChipNavigationBar) findViewById(R.id.bottom_navigation_doctor);
 
 
         chipNavigationBar.setOnItemSelectedListener(item -> {
             switch (item){
 
-                case (R.id.nav_home):
+                case (R.id.nav_doctor_home):
                     // getting the instance of the fragment class inside the fragment type variable
-                    fragmentInstance = new HomeFragment();
+                    fragmentInstance = new DoctorHomeFragment();
                     break;
 
                 case (R.id.nav_findADoctor):
@@ -58,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
                     For example, if you have a class that extends FragmentActivity and you want to add a fragment to the activity,
                      you can call getSupportFragmentManager() directly within the class:
                 * */
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container ,fragmentInstance).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_doctor ,fragmentInstance).commit();
             }
 
         });
 
         //By defeault before the user presses the navigation view our home fragment should appear
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_doctor,new DoctorHomeFragment()).commit();
     }
 }

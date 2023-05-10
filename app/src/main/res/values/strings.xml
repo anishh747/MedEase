@@ -19,7 +19,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_shop">Shop</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_find_a_doctor">Find A Doctor</string>
+    <string name="menu_chat">Chat</string>
 
     //Headings
     <string name="heading_one">Quick &amp; Easy Payments</string>
@@ -33,5 +33,7 @@
     <string name="desc_two">Be the first to know with instant notifications on your phone and Stay connected from your favorite apps and services.</string>
     <string name="desc_three">Get professional guidance through virtual consultations with your doctor.</string>
     <string name="desc_fourth">Get access to a comprehensive selection of medical supplies and healthcare products through our online marketplace</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
