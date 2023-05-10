@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/doctorlistcardview"
@@ -14,6 +16,7 @@
 
 
         <LinearLayout
+
             android:id="@+id/cardviewrow"
             android:layout_width="match_parent"
             android:layout_height="100dp"

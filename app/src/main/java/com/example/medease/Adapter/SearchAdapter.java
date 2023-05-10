@@ -73,7 +73,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             super(itemView);
 
             prodImage = itemView.findViewById(R.id.prodImageSpecificCategory);
-            prodName = itemView.findViewById(R.id.prodNameMyCart);
+            prodName = itemView.findViewById(R.id.itemNameViewOrder);
             prodPrice = itemView.findViewById(R.id.productPriceMyCart);
            // prodQty = itemView.findViewById(R.id.prod_qty);
             addToCartBtn = itemView.findViewById(R.id.addToCartBtn);

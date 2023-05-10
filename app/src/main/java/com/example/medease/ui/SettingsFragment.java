@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.medease.ChangeInformationActivity;
 import com.example.medease.ChangePasswordActivity;
 import com.example.medease.Model.NormalUsers;
+import com.example.medease.ViewOrderActivity;
 import com.example.medease.databinding.FragmentSlideshowBinding;
 import com.example.medease.loginpage;
 import com.google.firebase.auth.FirebaseAuth;
@@ -93,6 +94,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SettingsFragment.this.getActivity(), ChangePasswordActivity.class));
+            }
+        });
+
+        binding.viewOrderCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SettingsFragment.this.getActivity(), ViewOrderActivity.class));
             }
         });
 

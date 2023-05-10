@@ -90,17 +90,18 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyCartView
     public static final class MyCartViewHolder extends RecyclerView.ViewHolder{
 
         ImageView prodImage;
-        TextView prodName, prodPrice,prodQuantity;
+        TextView prodName, prodPrice,prodQuantity,prodRs;
         ImageView deleteBtn;
 
         public MyCartViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            prodImage = itemView.findViewById(R.id.prodImageSpecificCategory);
-            prodName = itemView.findViewById(R.id.prodNameMyCart);
+            prodImage = itemView.findViewById(R.id.prodImageMyCart);
+            prodName = itemView.findViewById(R.id.itemNameViewOrder);
             prodPrice = itemView.findViewById(R.id.productPriceMyCart);
             deleteBtn = itemView.findViewById(R.id.deleteItemBtn);
             prodQuantity = itemView.findViewById(R.id.quantityMyCart);
+            prodRs = itemView.findViewById(R.id.nrs);
 
 
         }
