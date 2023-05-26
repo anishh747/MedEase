@@ -107,7 +107,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = (String) snapshot.child("Username").getValue();
-                Log.i("Name",name);
+                //Log.i("Name",name);
                 usernametextview.setText(name);
                 image = (String) snapshot.child("Image").getValue();
                 if (image != null) {

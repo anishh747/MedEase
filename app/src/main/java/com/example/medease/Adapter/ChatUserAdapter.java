@@ -71,9 +71,7 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ChatUserAdapter.ViewHolder holder, int position) {
         Doctors doctors = chatUserList.get(position);
-        holder.usernametextview.setText(doctors.getUsername());
-        holder.chatuserfield.setText(doctors.getSpeciality());
-        holder.chatuserexperience.setText(doctors.getExperience());
+
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.i("My uid",uid);
@@ -86,6 +84,12 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+
+                    holder.usernametextview.setText(doctors.getUsername());
+                    holder.chatuserfield.setText(doctors.getGender());
+                    holder.chatuserexperience.setText(doctors.getMobileNo());
+
+
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -102,6 +106,10 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
+
+                                holder.usernametextview.setText(doctors.getUsername());
+                                holder.chatuserfield.setText(doctors.getSpeciality());
+                                holder.chatuserexperience.setText(doctors.getExperience());
                                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

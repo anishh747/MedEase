@@ -36,7 +36,7 @@ public class DoctorListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_doctor_list);
+      // setContentView(R.layout.activity_doctor_list);
 
         doctorListBinding = ActivityDoctorListBinding.inflate(getLayoutInflater());
         setContentView(doctorListBinding.getRoot());

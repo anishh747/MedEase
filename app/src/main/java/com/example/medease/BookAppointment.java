@@ -83,14 +83,14 @@ public class BookAppointment extends AppCompatActivity {
             map.put("appointmentDate",appointmentDate);
             map.put("appointmentTime",selectedChipText);
 
-            FirebaseDatabase.getInstance().getReference().child("MyAppointment").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference().child("MyAppointment").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(doctorid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Log.i("BookAppointment","My appointmentModel type");
                 }
             });
 
-            FirebaseDatabase.getInstance().getReference().child("MyAppointment").child(doctorid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference().child("MyAppointment").child(doctorid).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Log.i("BookAppointment","My appointmentModel type");

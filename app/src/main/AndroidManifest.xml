@@ -64,6 +64,7 @@
         <activity
             android:name=".userregisteractivity"
             android:exported="false" />
+
         <activity
             android:name=".DoctorMainActivity"
             android:exported="false" />

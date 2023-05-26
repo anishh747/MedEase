@@ -1,6 +1,7 @@
 package com.example.medease.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,8 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
 
         timetextview.setText(data.getAppointmentTime());
         datetextview.setText(data.appointmentDate);
+        Log.i("Doctor id ",data.getDoctorId());
+        Log.i("Patient id ",data.getPatientId());
 
         getUserType(data.getDoctorId(),data.getPatientId());
 
@@ -92,7 +95,9 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
-                    getInfo("Doctor",patientId);
+                    //getInfo("Doctor",patientId);
+                    getPatientData(patientId);
+                    Log.i("My PAst Appointment patientid",patientId);
                 } else {
                     // The current user is not a doctor, so check if they are a normal user
                     usersRef.child("Users").child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -100,7 +105,9 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
 
-                                getInfo("NormalUsers",doctorId);
+                                //getInfo("NormalUsers",doctorId);
+                                getDoctorData(doctorId);
+                                Log.i("My PAst Appointment patientid",doctorId);
 
                             } else {
                                 // The current user is neither a doctor nor a normal user
@@ -123,16 +130,16 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
         });
     }
 
-    private void getInfo(String usertype,String userid) {
-
-        if(usertype.equals("Doctor")){
-
-            getPatientData(userid);
-
-        } else if (usertype.equals("NormalUsers")) {
-            getDoctorData(userid);
-        }
-
+//    private void getInfo(String usertype,String userid) {
+//
+//        if(usertype.equals("Doctor")){
+//
+//            getPatientData(userid);
+//
+//        } else if (usertype.equals("NormalUsers")) {
+//            getDoctorData(userid);
+//        }
+//
 
 //        FirebaseDatabase.getInstance().getReference().child("Users").child(usertype).child(FirebaseAuth.getInstance().getCurrentUser().getUid())
 //                .addValueEventListener(new ValueEventListener() {
@@ -156,7 +163,7 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
 //
 //                    }
 //                });
-    }
+  //  }
 
     private void getDoctorData(String userid) {
         FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor")
@@ -168,7 +175,6 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
                         chatuserexperience.setText(doctors.getExperience());
                         chatuserfield.setText(doctors.getSpeciality());
 
-                        chatuserprice.setVisibility(View.GONE);
 
 
                         Picasso.get().load(snapshot.child("Image").getValue().toString()).into(userimage);
@@ -192,6 +198,8 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
                         chatuserexperience.setText(user.getAge());
                         chatuserfield.setText(user.getMobileNo());
                         Picasso.get().load(user.getImage()).into(userimage);
+
+                        chatuserprice.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -203,6 +211,7 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
 
     @Override
     public int getItemCount() {
+        Log.i("AppointmentModel Size", String.valueOf(appointmentModel.size()));
         return appointmentModel.size();
     }
 

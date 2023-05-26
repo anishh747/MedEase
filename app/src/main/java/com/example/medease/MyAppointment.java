@@ -50,9 +50,13 @@ public class MyAppointment extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 appointmentModel.clear();
-                AppointmentModel list = snapshot.getValue(AppointmentModel.class);
-                appointmentModel.add(list);
-                adapter.notifyDataSetChanged();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+
+                    AppointmentModel list = dataSnapshot.getValue(AppointmentModel.class);
+                    appointmentModel.add(list);
+                    adapter.notifyDataSetChanged();
+                }
+
 
             }
 

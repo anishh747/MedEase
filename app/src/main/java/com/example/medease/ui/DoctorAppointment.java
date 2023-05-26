@@ -118,12 +118,7 @@ public class DoctorAppointment extends AppCompatActivity{
 
         getAppointmentTime();
 
-        binding.buttonswitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DoctorAppointment.this, MyAppointment.class));
-            }
-        });
+
 
     }
 

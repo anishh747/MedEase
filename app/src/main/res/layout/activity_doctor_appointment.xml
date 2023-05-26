@@ -39,14 +39,9 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonswitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp" />
+
+
+
 
     <TextView
         android:id="@+id/fixappointmenttime"

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.medease.Adapter.MyPastAppointmentAdapter;
 import com.example.medease.Model.AppointmentModel;
+import com.example.medease.MyAppointment;
 import com.example.medease.databinding.FragmentMyAppointmentBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,9 +53,13 @@ public class MyAppointmentFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 appointmentModel.clear();
-                AppointmentModel list = snapshot.getValue(AppointmentModel.class);
-                appointmentModel.add(list);
-                adapter.notifyDataSetChanged();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+
+                    AppointmentModel list = dataSnapshot.getValue(AppointmentModel.class);
+                    appointmentModel.add(list);
+                    adapter.notifyDataSetChanged();
+                }
+
 
             }
 
