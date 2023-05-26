@@ -68,8 +68,7 @@ public class ShopFragment extends Fragment {
         searchAdapter = new SearchAdapter(getContext(),productsList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ShopFragment.this.getActivity());
-        binding.searchRecycler.setLayoutManager(linearLayoutManager);
-        binding.searchRecycler.setAdapter(searchAdapter);
+
         GenericTypeIndicator<HashMap<String, Object>> typeIndicator = new GenericTypeIndicator<HashMap<String, Object>>() {};
 
 
@@ -83,21 +82,17 @@ public class ShopFragment extends Fragment {
             }
         });
 
-        binding.myCartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ShopFragment.this.getActivity(), MyCartActivity.class));
-            }
-        });
+
 
 
 
         List<ProductCategory> productCategoryList = new ArrayList<>();
-        productCategoryList.add(new ProductCategory(1, "Trending"));
-        productCategoryList.add(new ProductCategory(2, "Most Popular"));
         productCategoryList.add(new ProductCategory(3, "Medicines"));
         productCategoryList.add(new ProductCategory(4, "Nutrition"));
         productCategoryList.add(new ProductCategory(5, "Other"));
+        productCategoryList.add(new ProductCategory(1, "Trending"));
+        productCategoryList.add(new ProductCategory(2, "Most Popular"));
+
 
         setProductRecycler(productCategoryList);
 

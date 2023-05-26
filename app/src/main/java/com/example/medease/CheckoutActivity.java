@@ -68,6 +68,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
                                 HashMap<String,Object> data = new HashMap<>();
+                                data.put("imageUrl",products.getImageUrl());
                                 data.put("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
                                 data.put("Address",binding.address.getText().toString());
                                 data.put("productName",products.getProductName());
@@ -77,6 +78,8 @@ public class CheckoutActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Log.i("MY pastOrder","MY pastOrder");
+                                        cartRef.removeValue();
+
                                     }
                                 });
 
