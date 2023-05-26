@@ -32,6 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="18sp"
                 android:text="Enter Delivery Address" />
 
             <EditText
@@ -73,6 +75,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="Order Summary"
+                android:textSize="18sp"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -160,6 +164,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="20dp">
 
@@ -180,8 +185,7 @@
                         android:layout_marginTop="15dp"
                         android:text="Use MedEase Points"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textSize="20dp" />
 
                 </LinearLayout>
 
@@ -194,6 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginEnd="10dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="20dp">
@@ -215,8 +220,7 @@
                         android:layout_marginTop="15dp"
                         android:text="Esewa"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textSize="20dp"/>
 
                 </LinearLayout>
 
@@ -231,6 +235,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 app:cardCornerRadius="20dp"
+                android:layout_marginBottom="5dp"
                 app:cardElevation="20dp">
 
                 <LinearLayout
@@ -251,7 +256,7 @@
                         android:text="Khalti"
                         android:textColor="@color/black"
                         android:textSize="20dp"
-                        android:textStyle="bold" />
+                         />
 
                 </LinearLayout>
 
@@ -286,7 +291,7 @@
                         android:text="Ime - Pay"
                         android:textColor="@color/black"
                         android:textSize="20dp"
-                        android:textStyle="bold" />
+                         />
 
                 </LinearLayout>
 
@@ -304,6 +309,8 @@
         android:layout_marginBottom="12dp"
         android:text="Payment Options"
         android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

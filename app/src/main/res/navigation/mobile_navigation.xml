@@ -52,4 +52,10 @@
         android:name="com.example.medease.ui.MyAppointmentFragment"
         android:label="MyAppointment"
         tools:layout="@layout/fragment_my_appointment" />
+
+    <fragment
+        android:id="@+id/nav_searchShop"
+        android:name="com.example.medease.ui.SearchShopFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search_shop" />
 </navigation>

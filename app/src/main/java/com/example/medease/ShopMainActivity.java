@@ -11,6 +11,7 @@ import com.example.medease.ui.DoctorHomeFragment;
 import com.example.medease.ui.FindADoctorFragment;
 import com.example.medease.ui.MyAppointmentFragment;
 import com.example.medease.ui.MyCartFragment;
+import com.example.medease.ui.SearchShopFragment;
 import com.example.medease.ui.SettingsFragment;
 import com.example.medease.ui.ShopFragment;
 import com.example.medease.ui.ViewOrderFragment;
@@ -41,6 +42,10 @@ public class ShopMainActivity extends AppCompatActivity {
 
                 case (R.id.nav_myCart):
                     fragmentInstance = new MyCartFragment();
+                    break;
+
+                case (R.id.nav_searchShop):
+                    fragmentInstance = new SearchShopFragment();
                     break;
 
                 case (R.id.nav_viewOrders):

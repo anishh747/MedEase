@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.medease.Adapter.MyPastAppointmentAdapter;
 import com.example.medease.Model.AppointmentModel;
@@ -42,7 +43,9 @@ public class MyAppointmentFragment extends Fragment {
         binding.pastappointmentrecyclerview.setLayoutManager(linearLayoutManager);
         binding.pastappointmentrecyclerview.setAdapter(adapter);
 
-        getAppointment();
+            getAppointment();
+
+
 
 
         return root;

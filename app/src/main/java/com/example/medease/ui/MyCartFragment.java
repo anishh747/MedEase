@@ -59,7 +59,7 @@ public class MyCartFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Products products = dataSnapshot.getValue(Products.class);
                     productsList.add(products);
-                    //totalPrice += (Integer.parseInt(products.getProductQuantity())*Integer.parseInt(products.getProductPrice()));
+                    totalPrice += (Integer.parseInt(products.getProductQuantity())*Integer.parseInt(products.getProductPrice()));
                 }
                 setProdItemRecycler();
 
