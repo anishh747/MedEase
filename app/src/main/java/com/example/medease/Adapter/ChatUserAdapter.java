@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -88,6 +89,21 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
                     holder.usernametextview.setText(doctors.getUsername());
                     holder.chatuserfield.setText(doctors.getGender());
                     holder.chatuserexperience.setText(doctors.getMobileNo());
+                    FirebaseDatabase.getInstance().getReference("Users").child("NormalUsers").child(doctors.getId()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.child("Image").getValue() != null){
+                                Picasso.get().load(snapshot.child("Image").getValue().toString()).into(holder.userimage);
+                            }else{
+                                Log.i("UserImage Null","Doctor AppointmentModel");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
 
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +126,22 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
                                 holder.usernametextview.setText(doctors.getUsername());
                                 holder.chatuserfield.setText(doctors.getSpeciality());
                                 holder.chatuserexperience.setText(doctors.getExperience());
+
+                                FirebaseDatabase.getInstance().getReference("Users").child("Doctor").child(doctors.getId()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if(snapshot.child("Image").getValue() != null){
+                                            Picasso.get().load(snapshot.child("Image").getValue().toString()).into(holder.userimage);
+                                        }else{
+                                            Log.i("UserImage Null","Doctor AppointmentModel");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

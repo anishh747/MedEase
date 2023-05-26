@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -90,6 +91,23 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         holder.username.setText(doctors.getUsername());
         holder.doctorfieldname.setText(doctors.getSpeciality());
         holder.experience.setText(doctors.getExperience());
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(doctors.getId())
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.child("Image").getValue() != null){
+                                    Picasso.get().load(snapshot.child("Image").getValue().toString()).into(holder.userimage);
+                                }else{
+                                    Log.i("UserImage Null","Doctor List Adapter");
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
         checkLike(holder.like,doctors.getId());
         nooflike(holder.nooflikes,doctors.getId());
