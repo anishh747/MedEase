@@ -64,7 +64,9 @@
         <activity
             android:name=".userregisteractivity"
             android:exported="false" />
-
+        <activity
+            android:name=".SpecificCategoryActivity"
+            android:exported="false" />
         <activity
             android:name=".DoctorMainActivity"
             android:exported="false" />
@@ -73,6 +75,9 @@
             android:exported="false" />
         <activity
             android:name=".ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaymentSuccessActivity"
             android:exported="false" />
         <activity
             android:name=".ViewOrderActivity"
