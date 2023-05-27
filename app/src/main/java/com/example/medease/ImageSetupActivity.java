@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -78,6 +79,9 @@ public class ImageSetupActivity extends AppCompatActivity {
                     Uri imageUri = result.getData().getData();
                     setupimage.setImageURI(imageUri);
 
+
+
+
                     // Get a reference to the Firebase Storage location where you want to upload the image
                     StorageReference imageRef = storageRef.child("images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + UUID.randomUUID().toString());
 
@@ -92,6 +96,53 @@ public class ImageSetupActivity extends AppCompatActivity {
                                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                             .child("image")
                                             .setValue(uri.toString());
+
+                                    Log.i("ImageUri",uri.toString());
+
+
+
+                                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference();
+                                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                    usersRef.child("Users").child("Doctor").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.exists()) {
+
+                                                FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(uid).child("Image").setValue(uri.toString());
+
+                                            } else {
+                                                // The current user is not a doctor, so check if they are a normal user
+                                                usersRef.child("Users").child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        if (dataSnapshot.exists()) {
+
+                                                            FirebaseDatabase.getInstance().getReference().child("Users").child("NormalUsers").child(uid).child("Image").setValue(uri.toString());
+
+
+
+                                                        } else {
+                                                            // The current user is neither a doctor nor a normal user
+                                                            // Do whatever you need to do here
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                        // Handle any errors here
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            // Handle any errors here
+                                        }
+                                    });
+
+
                                 });
                                 startActivity(new Intent(ImageSetupActivity.this, MainActivity.class));
                             })
@@ -130,7 +181,7 @@ public class ImageSetupActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
 
-                                Usertype = "NormalUser";
+                                Usertype = "NormalUsers";
                                 getInfo(Usertype);
 
                             } else {
@@ -161,22 +212,22 @@ public class ImageSetupActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                        for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                             if(usertype.equals("Doctor")){
 
-                                Doctors doctor = dataSnapshot.getValue(Doctors.class);
+                                Doctors doctor = snapshot.getValue(Doctors.class);
                                 binding.name.setText(doctor.getUsername());
                                 binding.gender.setText(doctor.getGender());
                                 binding.number.setText(doctor.getMobileNo());
 
-                            } else if (usertype.equals("NormalUser")) {
-                                NormalUsers user = dataSnapshot.getValue(NormalUsers.class);
+                            } else if (usertype.equals("NormalUsers")) {
+                                NormalUsers user = snapshot.getValue(NormalUsers.class);
                                 binding.name.setText(user.getUsername());
                                 binding.gender.setText(user.getGender());
                                 binding.number.setText(user.getMobileNo());
                             }
                         }
-                    }
+                    //}
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {

@@ -131,6 +131,8 @@ public class HomeFragment extends Fragment {
                 List<Map.Entry<String, Integer>> sortedLikesList = new ArrayList<>(likeCountMap.entrySet());
                 Collections.sort(sortedLikesList, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
+                topUsers.clear();
+
                 for (int i = 0; i < Math.min(sortedLikesList.size(), 5); i++) {
                     Log.i("List",sortedLikesList.get(i).getKey());
 
@@ -138,7 +140,7 @@ public class HomeFragment extends Fragment {
                     FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(sortedLikesList.get(i).getKey()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            topUsers.clear();
+
                             Doctors doctors= snapshot.getValue(Doctors.class);
                             Log.i(doctors.getUsername(),"Users");
                             topUsers.add(doctors);

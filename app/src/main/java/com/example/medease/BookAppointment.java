@@ -119,7 +119,8 @@ public class BookAppointment extends AppCompatActivity {
     }
 
     private void sendMessage() {
-        String message = "Hello nibba";
+
+        String message = "You have sucessfully Booked your Appointment ";
         String number = "9848949773";
         SmsManager smsManager = SmsManager.getDefault();
         ArrayList<String> part = smsManager.divideMessage(message);

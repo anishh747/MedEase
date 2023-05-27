@@ -17,8 +17,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_width="384dp"
+        android:layout_height="85dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="10dp"
@@ -27,24 +27,18 @@
         app:cardElevation="20dp">
 
 
-
-        <EditText
+        <TextView
             android:id="@+id/chatusersearch"
             android:layout_width="371dp"
             android:layout_height="57dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/buttonbackground"
-            android:hint="SEARCH"
-            android:padding="10dp"
+            android:textColor="#F40606"
+            android:text="CHAT"
             android:paddingStart="60dp"
-            android:textStyle="bold" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="38dp"
-            android:src="@drawable/search_icon" />
+            android:textSize="30dp"
+            android:textStyle="bold"
+            />
 
     </androidx.cardview.widget.CardView>
 

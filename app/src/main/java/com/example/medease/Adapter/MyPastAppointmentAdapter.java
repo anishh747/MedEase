@@ -27,13 +27,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppointmentAdapter.ViewHolder> {
-    CircleImageView userimage;
-    TextView usernametextview;
-    TextView chatuserfield;
-    TextView chatuserexperience;
-    TextView chatuserprice;
-    TextView timetextview;
-    TextView datetextview;
+
     Context context;
     List<AppointmentModel> appointmentModel;
 
@@ -43,6 +37,14 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        CircleImageView userimage;
+        TextView usernametextview;
+        TextView chatuserfield;
+        TextView chatuserexperience;
+        TextView chatuserprice;
+        TextView timetextview;
+        TextView datetextview;
 
 
 
@@ -74,19 +76,19 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
 
         AppointmentModel data = appointmentModel.get(position);
 
-        timetextview.setText(data.getAppointmentTime());
-        datetextview.setText(data.appointmentDate);
+        holder.timetextview.setText(data.getAppointmentTime());
+        holder.datetextview.setText(data.appointmentDate);
         Log.i("Doctor id ",data.getDoctorId());
         Log.i("Patient id ",data.getPatientId());
 
-        getUserType(data.getDoctorId(),data.getPatientId());
+        getUserType(data.getDoctorId(),data.getPatientId(),holder);
 
 
 
 
     }
 
-    private void getUserType(String doctorId, String patientId) {
+    private void getUserType(String doctorId, String patientId, ViewHolder holder) {
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -96,17 +98,18 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
                 if (dataSnapshot.exists()) {
 
                     //getInfo("Doctor",patientId);
-                    getPatientData(patientId);
+                    getPatientData(patientId,holder);
                     Log.i("My PAst Appointment patientid",patientId);
                 } else {
                     // The current user is not a doctor, so check if they are a normal user
                     usersRef.child("Users").child("NormalUsers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                             if (dataSnapshot.exists()) {
 
                                 //getInfo("NormalUsers",doctorId);
-                                getDoctorData(doctorId);
+                                getDoctorData(doctorId,holder);
                                 Log.i("My PAst Appointment patientid",doctorId);
 
                             } else {
@@ -165,19 +168,19 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
 //                });
   //  }
 
-    private void getDoctorData(String userid) {
+    private void getDoctorData(String userid, ViewHolder holder) {
         FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor")
                 .child(userid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Doctors doctors = snapshot.getValue(Doctors.class);
-                        usernametextview.setText(doctors.getUsername());
-                        chatuserexperience.setText(doctors.getExperience());
-                        chatuserfield.setText(doctors.getSpeciality());
+                        holder.usernametextview.setText(doctors.getUsername());
+                        holder.chatuserexperience.setText(doctors.getExperience());
+                        holder.chatuserfield.setText(doctors.getSpeciality());
 
 
 
-                        Picasso.get().load(snapshot.child("Image").getValue().toString()).into(userimage);
+                        Picasso.get().load(snapshot.child("Image").getValue().toString()).into(holder.userimage);
                         
                     }
 
@@ -188,18 +191,18 @@ public class MyPastAppointmentAdapter extends RecyclerView.Adapter<MyPastAppoint
                 });
     }
 
-    private void getPatientData(String userid) {
+    private void getPatientData(String userid, ViewHolder holder) {
         FirebaseDatabase.getInstance().getReference().child("Users").child("NormalUsers")
                 .child(userid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         NormalUsers user = snapshot.getValue(NormalUsers.class);
-                        usernametextview.setText(user.getUsername());
-                        chatuserexperience.setText(user.getAge());
-                        chatuserfield.setText(user.getMobileNo());
-                        Picasso.get().load(user.getImage()).into(userimage);
+                        holder.usernametextview.setText(user.getUsername());
+                        holder.chatuserexperience.setText(user.getAge());
+                        holder.chatuserfield.setText(user.getMobileNo());
+                        Picasso.get().load(user.getImage()).into(holder.userimage);
 
-                        chatuserprice.setVisibility(View.GONE);
+                        holder.chatuserprice.setVisibility(View.GONE);
                     }
 
                     @Override
