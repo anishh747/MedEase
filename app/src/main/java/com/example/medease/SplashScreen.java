@@ -13,7 +13,7 @@ import com.airbnb.lottie.LottieAnimationView;
 public class SplashScreen extends AppCompatActivity {
 
     ImageView background,logo;
-    TextView name;
+    //TextView name;
     LottieAnimationView lottie;
 
     @Override
@@ -23,7 +23,7 @@ public class SplashScreen extends AppCompatActivity {
 
         background= findViewById(R.id.img);
         logo= findViewById(R.id.Logo);
-        name= findViewById(R.id.app_name);
+        //name= findViewById(R.id.app_name);
         logo= findViewById(R.id.lottieId);
 
 

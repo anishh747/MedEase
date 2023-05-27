@@ -23,14 +23,14 @@
 
     //Headings
     <string name="heading_one">Chat Feature with Video calling</string>
-    <string name="heading_two">Calculate your BMI</string>
+    <string name="heading_two">Doctor Appointment</string>
     <string name="heading_three"> Consult Your Doctor</string>
     <string name="heading_fourth"> E-commerce </string>
 
 
     //Description
     <string name="desc_one">Have virtual consultations with healthcare professionals through video calls.</string>
-    <string name="desc_two">Determine Your Body Mass Index (BMI) based on your height and weight</string>
+    <string name="desc_two">schedule appointments with doctors or healthcare professionals.</string>
     <string name="desc_three">Get professional guidance through virtual consultations with your doctor.</string>
     <string name="desc_fourth">Get access to a comprehensive selection of medical supplies and healthcare products through our online marketplace</string>
     <!-- TODO: Remove or change this placeholder text -->
