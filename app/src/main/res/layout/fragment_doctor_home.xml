@@ -13,18 +13,20 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userimage"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            tools:srcCompat="@tools:sample/avatars"
-            app:civ_border_color="@color/black"/>
+            android:layout_width="119dp"
+            android:layout_marginStart="30dp"
+            android:layout_height="match_parent"
+            app:civ_border_color="@color/black"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/username"
             android:layout_width="144dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
+
             android:text="Doctor Name"
             android:textColor="@color/white"
+            android:layout_marginStart="170dp"
             android:layout_marginTop="40dp"
             android:textSize="20sp"
             />
@@ -33,7 +35,7 @@
             android:id="@+id/userfield"
             android:layout_width="134dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
+            android:layout_marginStart="170dp"
             android:layout_marginTop="63dp"
             android:text="Field name"
             android:textColor="@color/white"
@@ -74,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginStart="120dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="270dp"
         android:background="@color/amp_transparent"
         android:drawableRight="@drawable/ic_clock"
         android:drawableTint="@color/black"
@@ -85,7 +87,7 @@
 
         android:id="@+id/in_time"
         android:layout_marginStart="145dp"
-        android:layout_marginTop="345dp"
+        android:layout_marginTop="310dp"
         android:text="MM/DD/YYYY"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
@@ -95,32 +97,26 @@
 
     <Button
         android:id="@+id/enterbutton"
-        android:text="Enter"
-        android:layout_marginStart="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-
-        />
+        android:layout_marginTop="370dp"
+        android:layout_marginStart="150dp"
+        android:text="Enter" />
 
     <ImageView
         android:id="@+id/calendarimage"
         android:layout_width="59dp"
         android:layout_height="35dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="110dp"
-        android:layout_marginBottom="235dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="450dp"
         android:src="@drawable/ic_calender" />
 
     <TextView
         android:id="@+id/calendertextview"
         android:layout_width="116dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="230dp"
-        android:layout_marginBottom="240dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="455dp"
         android:text="0"
         android:textColor="#F60606"
         android:textSize="18dp"
@@ -128,12 +124,11 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
-        android:layout_width="409dp"
+        android:layout_width="400dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginStart="5dp"
         android:layout_height="156dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="65dp"
+        android:background="#F4D9D9"
         android:checkableBehavior="single"
         app:chipSpacingHorizontal="8dp"
         app:chipSpacingVertical="8dp" />

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.medease.ChangeInformationActivity;
 import com.example.medease.ChangePasswordActivity;
 import com.example.medease.Model.NormalUsers;
+import com.example.medease.ReportBugActivity;
 import com.example.medease.ViewOrderActivity;
 import com.example.medease.databinding.FragmentSlideshowBinding;
 import com.example.medease.loginpage;
@@ -103,6 +104,12 @@ public class SettingsFragment extends Fragment {
                 startActivity(new Intent(SettingsFragment.this.getActivity(), ViewOrderActivity.class));
             }
         });
+binding.reportBugCard.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(SettingsFragment.this.getActivity(), ReportBugActivity.class));
+    }
+});
 
         binding.button2.setOnClickListener(new View.OnClickListener() {
             @Override

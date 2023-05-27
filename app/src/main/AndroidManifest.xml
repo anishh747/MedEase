@@ -21,7 +21,12 @@
         <activity
             android:name=".ShopMainActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".onboardscreen"
+            android:exported="false" />
+        <activity
+            android:name=".loginpage"
+            android:exported="false" />
         <activity
             android:name=".MyAppointment"
             android:exported="false" />
@@ -82,17 +87,20 @@
         <activity
             android:name=".ViewOrderActivity"
             android:exported="false" />
+        <activity
+            android:name=".ReportBugActivity"
+            android:exported="false"
+            />
 
         <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
 
         <activity
-            android:name=".loginpage"
+            android:name=".SplashScreen"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
-
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
