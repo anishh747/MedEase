@@ -22,6 +22,8 @@ import com.example.medease.Model.NormalUsers;
 
 import com.example.medease.MyAppointment;
 import com.example.medease.ShopMainActivity;
+import com.example.medease.bmiactivity;
+import com.example.medease.bmicalculator;
 import com.example.medease.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,8 +45,8 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding homepagBindinge;
 
-    TextView username ;
-    CircleImageView userimage;
+    String username ;
+    String imageUrl;
     TopUsersAdapter adapter;
     List<Doctors> topUsers;
 
@@ -63,7 +65,7 @@ public class HomeFragment extends Fragment {
 
         topUsers = new ArrayList<>();
 
-
+        getUserInformation("NormalUsers");
 
 
         adapter= new TopUsersAdapter(getActivity(),(ArrayList<Doctors>)topUsers);
@@ -101,13 +103,9 @@ public class HomeFragment extends Fragment {
         });
 
         homepagBindinge.appointmentcardview.setOnClickListener(v->{
-            Intent intent = new Intent(HomeFragment.this.getActivity(), MyAppointment.class);
+            Intent intent = new Intent(HomeFragment.this.getActivity(), bmicalculator.class);
             startActivity(intent);
         });
-
-
-
-
 
         return root;
     }
@@ -134,7 +132,7 @@ public class HomeFragment extends Fragment {
                 topUsers.clear();
 
                 for (int i = 0; i < Math.min(sortedLikesList.size(), 5); i++) {
-                    Log.i("List",sortedLikesList.get(i).getKey());
+                    //Log.i("List",sortedLikesList.get(i).getKey());
 
 
                     FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(sortedLikesList.get(i).getKey()).addValueEventListener(new ValueEventListener() {
@@ -219,12 +217,15 @@ public class HomeFragment extends Fragment {
                 if (snapshot.exists()) {
                     if (userType.equals("NormalUsers")) {
                         NormalUsers user = snapshot.getValue(NormalUsers.class);
-                        Log.i("Normal User Name",user.getUsername());
-                        homepagBindinge.textView3.setText(user.getUsername());
+                        //Log.i("Normal User Name",user.getUsername());
 
+                        imageUrl = user.getImage();
+                        username = user.getUsername();
                         if (user.getImage() != null) {
                             Picasso.get().load(user.getImage()).into(homepagBindinge.homepageImage);
                         }
+                        if (user.getUsername() != null) {
+                            homepagBindinge.textView3.setText(user.getUsername());                        }
                     } else if (userType.equals("Doctor")) {
                         Doctors doctor = snapshot.getValue(Doctors.class);
                         homepagBindinge.textView3.setText(doctor.getUsername());

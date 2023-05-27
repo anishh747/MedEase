@@ -15,6 +15,7 @@ import com.example.medease.Adapter.ViewOrderAdapter;
 import com.example.medease.Model.Products;
 import com.example.medease.databinding.ActivityChangePasswordBinding;
 import com.example.medease.databinding.ActivityViewOrderBinding;
+import com.example.medease.ui.ViewOrderFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +32,8 @@ public class ViewOrderActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     List<Products> productsList = new ArrayList<>();
     int totalPrice;
+    String address;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,14 +49,19 @@ public class ViewOrderActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-    //                Toast.makeText(ViewOrderActivity.this,dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+                    //                Toast.makeText(ViewOrderActivity.this,dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
                     Products products = dataSnapshot.getValue(Products.class);
                     Log.e("NAME VIEW ORDER",products.getProductName());
-                    String address = dataSnapshot.child("Address").getValue().toString();
+                    address = dataSnapshot.child("Address").getValue().toString();
                     Log.i("Address",address);
+                    Log.i("Price",products.getProductPrice());
                     productsList.add(products);
-//                    totalPrice += (Integer.parseInt(products.getProductQuantity())*Integer.parseInt(products.getProductPrice()));
+                    totalPrice += (Integer.parseInt(products.getProductQuantity())*Integer.parseInt(products.getProductPrice()));
+
                 }
+
+                binding.totalCost.setText(Integer.toString(totalPrice));
+                binding.deliveryAddress.setText(address);
                 setProdItemRecycler();
             }
 

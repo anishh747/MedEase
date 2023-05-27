@@ -171,16 +171,17 @@
                 app:cardUseCompatPadding="true">
 
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/appointmenticon" />
+                    android:layout_marginTop="8dp"
+                    android:layout_width="115dp"
+                    android:layout_height="76dp"
+                    android:src="@drawable/bmi" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="90dp"
-                    android:text="APPOINTMENT"
+                    android:text="BMI"
                     android:textColor="#E60B0B" />
 
             </androidx.cardview.widget.CardView>

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -37,6 +38,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     String imageUrl;
     Uri imageUri;
+    ProgressDialog progressDialog;
     String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class ChangeInformationActivity extends AppCompatActivity {
         binding = ActivityChangeInformationBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        progressDialog = new ProgressDialog(ChangeInformationActivity.this);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
@@ -82,9 +86,11 @@ public class ChangeInformationActivity extends AppCompatActivity {
 
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
+
                         makeChanges();
-                        startActivity(new Intent(ChangeInformationActivity.this, MainActivity.class));
+                        startActivity(new Intent(ChangeInformationActivity.this, loginpage.class));
                         dialog.dismiss();
+
                     }
                 });
 

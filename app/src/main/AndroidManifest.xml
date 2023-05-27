@@ -78,6 +78,14 @@
         <activity
             android:name=".ChangeInformationActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".bmiactivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".bmicalculator"
+            android:exported="false" />
         <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />

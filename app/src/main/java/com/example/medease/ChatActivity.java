@@ -1,5 +1,6 @@
 package com.example.medease;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -97,7 +99,7 @@ public class ChatActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().getReference("VideoCall").child(userid).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
-                    //startVideoCall();
+                    startVideoCall();
                 }
             });
         });
@@ -177,6 +179,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
         chatsendimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,6 +242,45 @@ public class ChatActivity extends AppCompatActivity {
                 chatAdapter.notifyDataSetChanged();
             }
 
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void checkCall() {
+        FirebaseDatabase.getInstance().getReference().child("VideoCall").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(FirebaseAuth.getInstance().getUid())){
+                    String joinRoomCode = snapshot.child(FirebaseAuth.getInstance().getUid()).child("Caller").getValue(String.class);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    builder.setMessage("Someone is calling")
+                            .setTitle("Videocall");
+
+                    builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            FirebaseDatabase.getInstance().getReference("VideoCall").child(FirebaseAuth.getInstance().getUid()).removeValue();
+                            JitsiMeetConferenceOptions meetConferenceOptions = new JitsiMeetConferenceOptions.Builder()
+                                    .setRoom(videoRoomCode)
+                                    .setFeatureFlag("welcomepage.enabled", false)
+                                    .build();
+                            JitsiMeetActivity.launch(ChatActivity.this,meetConferenceOptions);
+                        }
+                    });
+                    builder.setNegativeButton("Reject", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            FirebaseDatabase.getInstance().getReference("VideoCall").child(FirebaseAuth.getInstance().getUid()).removeValue();
+                        }
+                    });
+
+                    builder.show();
+
+                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

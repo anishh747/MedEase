@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.medease.Model.Products;
 import com.example.medease.ProductDetails;
@@ -104,6 +105,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         ImageView prodImage;
         TextView prodName, prodQty, prodPrice;
         Button addToCartBtn;
+        CardView cardView;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -111,7 +113,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             prodImage = itemView.findViewById(R.id.prodImageMyCart);
             prodName = itemView.findViewById(R.id.itemNameViewOrder);
             prodPrice = itemView.findViewById(R.id.productPriceMyCart);
-         // prodQty = itemView.findViewById(R.id.prod_qty);
+             // prodQty = itemView.findViewById(R.id.prod_qty);
             addToCartBtn = itemView.findViewById(R.id.addToCartBtn);
 
 
