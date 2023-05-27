@@ -1,11 +1,6 @@
 package com.example.medease.ui;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,13 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.medease.Adapter.DoctorListAdapter;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.medease.Adapter.SearchShopAdapter;
-import com.example.medease.Model.Doctors;
 import com.example.medease.Model.Products;
-import com.example.medease.R;
 import com.example.medease.databinding.FragmentSearchShopBinding;
-import com.example.medease.databinding.FragmentShopBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

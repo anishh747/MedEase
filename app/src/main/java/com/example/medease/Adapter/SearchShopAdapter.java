@@ -38,7 +38,6 @@ public class SearchShopAdapter extends RecyclerView.Adapter<SearchShopAdapter.Vi
             super(itemView);
             productimage =(ImageView)itemView.findViewById(R.id.prodImageMyCart);
             itemname= itemView.findViewById(R.id.itemNameViewOrder);
-            quantity = itemView.findViewById(R.id.quantityMyCart);
             price = itemView.findViewById(R.id.productPriceMyCart);
         }
     }
@@ -48,7 +47,7 @@ public class SearchShopAdapter extends RecyclerView.Adapter<SearchShopAdapter.Vi
     @Override
     public SearchShopAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.product_vertical, parent, false);
+                .inflate(R.layout.indvidualitem, parent, false);
 
         return new ViewHolder(view);
     }
@@ -57,7 +56,6 @@ public class SearchShopAdapter extends RecyclerView.Adapter<SearchShopAdapter.Vi
     public void onBindViewHolder(@NonNull SearchShopAdapter.ViewHolder holder, int position) {
         Products products =  shoplist.get(position);
         holder.itemname.setText(products.getProductName());
-        holder.quantity.setText(products.getProductQuantity());
         holder.price.setText(products.getProductPrice());
         if(products.getImageUrl() != null){
             Picasso.get().load(products.getImageUrl()).into(holder.productimage);

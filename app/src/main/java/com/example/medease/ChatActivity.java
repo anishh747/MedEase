@@ -81,7 +81,6 @@ public class ChatActivity extends AppCompatActivity {
         Log.i("usertype",usertype);
         Log.i("Userid",userid);
 
-        checkCall();
 
 
         try {
@@ -102,28 +101,60 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
         });
+        
+        if(usertype.equals("NormalUsers")){
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(userid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = (String) snapshot.child("Username").getValue();
-                //Log.i("Name",name);
-                usernametextview.setText(name);
-                image = (String) snapshot.child("Image").getValue();
-                if (image != null) {
-                    Log.i("Image image",image);
-                    Picasso.get().load(image).into(userimage);
-                    chatAdapter.setUserImage(image);
+            FirebaseDatabase.getInstance().getReference().child("Users").child("Doctor").child(userid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String name = (String) snapshot.child("Username").getValue();
+                    //Log.i("Name",name);
+                    usernametextview.setText(name);
+                    image = (String) snapshot.child("Image").getValue();
+                    if (image != null) {
+                        Log.i("Image image",image);
+                        Picasso.get().load(image).into(userimage);
+                        chatAdapter.setUserImage(image);
+                    }
+
                 }
 
-            }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            
+        } else if (usertype.equals("Doctor")) {
+
+            FirebaseDatabase.getInstance().getReference().child("Users").child("NormalUsers").child(userid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String name = (String) snapshot.child("Username").getValue();
+                    //Log.i("Name",name);
+                    usernametextview.setText(name);
+                    image = (String) snapshot.child("Image").getValue();
+                    if (image != null) {
+                        Log.i("Image image",image);
+                        Picasso.get().load(image).into(userimage);
+                        chatAdapter.setUserImage(image);
+                    }
+
+                }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+
+
+            
+        }
+
+
 
 
 
@@ -173,36 +204,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private void checkCall() {
-        FirebaseDatabase.getInstance().getReference().child("VideoCall").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild(FirebaseAuth.getInstance().getUid())){
-                    String joinRoomCode = snapshot.child(FirebaseAuth.getInstance().getUid()).child("Caller").getValue(String.class);
-                    ViewGroup.LayoutParams layoutParams =  chatrecyclerview.getLayoutParams();
-                    layoutParams.height = height;
-                    chatrecyclerview.setLayoutParams(layoutParams);
-                    findViewById(R.id.callBoxLayout).setVisibility(View.VISIBLE);
-                    findViewById(R.id.joinNowBtn).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            JitsiMeetConferenceOptions meetConferenceOptions = new JitsiMeetConferenceOptions.Builder()
-                                    .setRoom(joinRoomCode)
-                                    .setFeatureFlag("welcomepage.enabled", false)
-                                    .build();
-                            JitsiMeetActivity.launch(ChatActivity.this,meetConferenceOptions);
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private void startVideoCall() {
             JitsiMeetConferenceOptions meetConferenceOptions = new JitsiMeetConferenceOptions.Builder()
