@@ -85,6 +85,8 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
+
         try {
             serverUrl = new URL("https://meet.jit.si");
             JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder().setServerURL(serverUrl).build();
@@ -205,6 +207,7 @@ public class ChatActivity extends AppCompatActivity {
             }
 
         });
+        checkCall();
     }
 
 
@@ -265,7 +268,7 @@ public class ChatActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int id) {
                             FirebaseDatabase.getInstance().getReference("VideoCall").child(FirebaseAuth.getInstance().getUid()).removeValue();
                             JitsiMeetConferenceOptions meetConferenceOptions = new JitsiMeetConferenceOptions.Builder()
-                                    .setRoom(videoRoomCode)
+                                    .setRoom(joinRoomCode)
                                     .setFeatureFlag("welcomepage.enabled", false)
                                     .build();
                             JitsiMeetActivity.launch(ChatActivity.this,meetConferenceOptions);
