@@ -43,7 +43,7 @@ public class SpecificCategoryActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String type = bundle.getString("Product_Category");
-
+        binding.categoryName.setText(type);
         databaseReference.child("Products").child(type).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

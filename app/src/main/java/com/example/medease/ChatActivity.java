@@ -251,6 +251,9 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+
+        checkCall();
     }
 
     private void checkCall() {

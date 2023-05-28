@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medease.Model.ProductCategory;
@@ -47,6 +48,24 @@ public class SpecificCategoryAdapter extends RecyclerView.Adapter<SpecificCatego
         holder.prodName.setText(productList.get(position).getProductName());
         holder.prodPrice.setText(productList.get(position).getProductPrice());
         Picasso.get().load(productList.get(position).getImageUrl()).into(holder.prodImage);
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, ProductDetails.class);
+                i.putExtra("Product_Name",productList.get(position).getProductName());
+                i.putExtra("Product_Price", productList.get(position).getProductPrice());
+                i.putExtra("Image_Url",productList.get(position).getImageUrl());
+                i.putExtra("Product_Description",productList.get(position).getProductDescription());
+
+/*
+                Pair[] pairs = new Pair[1];
+                pairs[0] = new Pair<View, String>(holder.prodImage, "image");
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity) context, pairs);
+               */
+                context.startActivity(i/*, activityOptions.toBundle()*/);
+            }
+        });
+
     }
 
     @Override
@@ -61,15 +80,13 @@ public class SpecificCategoryAdapter extends RecyclerView.Adapter<SpecificCatego
         ImageView prodImage;
         TextView prodName;
         TextView prodPrice;
-        Button button;
-
+        ConstraintLayout constraintLayout;
         public SpecificCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            prodImage = itemView.findViewById(R.id.prodImageSpecificCategory);
-            prodName = itemView.findViewById(R.id.prodNameSpecificCategory);
-            prodPrice = itemView.findViewById(R.id.prodPriceSpecificCategory);
-            button = itemView.findViewById(R.id.buttonSpecificCategory);
-
+            prodImage = itemView.findViewById(R.id.prodImageMyCart);
+            prodName = itemView.findViewById(R.id.itemNameViewOrder);
+            prodPrice = itemView.findViewById(R.id.productPriceMyCart);
+            constraintLayout = itemView.findViewById(R.id.outerLayout);
         }
     }
 
